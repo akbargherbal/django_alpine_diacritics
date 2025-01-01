@@ -1,11 +1,13 @@
+// app.js
 import Alpine from "./node_modules/alpinejs/dist/module.esm.js";
-import { diacritics, ar_alpha } from "./data.js";
 import {
   wordNavigator,
   charNavigator,
-  handleDiacritics,
   logEvent,
+  fatha,
+  addDia,
 } from "./utils.js";
+import { setupHotkeys } from "./hotkeys.js";
 
 window.Alpine = Alpine;
 window.logEvent = logEvent;
@@ -13,45 +15,42 @@ window.logEvent = logEvent;
 document.addEventListener("alpine:init", () => {
   Alpine.data("sentHook", () => ({
     wordIndex: -1,
-    wordSelected: false,
-    charIndex: 0,
+    charIndex: -1,
     currentDia: "",
-    diaIndex: 0,
-    dia: ["", ""],
-    maxDia: 2,
-    tokensCount: 0,
-    init() {
-      console.log("Available diacritics:", diacritics);
 
-      // get value of data-tokens-count
-      this.tokensCount = document
-        .querySelector(".verse")
-        .getAttribute("data-tokens-count");
-      this.tokensCount = parseInt(this.tokensCount);
+    init() {
+      setupHotkeys({
+        wordNavigator: () => this.wordNavigator(),
+        charNavigator: () => this.charNavigator(),
+        fatha: () => this.fatha(),
+        addDia: () => this.addDia(),
+      });
+
+      this.tokensCount = parseInt(
+        document.querySelector(".verse").getAttribute("data-tokens-count")
+      );
 
       this.$watch("wordIndex", (value, oldValue) => {
         console.table({
           wordIndex: this.wordIndex,
           tokensCount: this.tokensCount,
-          wordSelected: this.wordSelected,
         });
       });
     },
 
-    handleKeyDown(event) {
-      if (event.ctrlKey && event.code === "Space") {
-        event.preventDefault();
-        wordNavigator(this);
-      }
+    wordNavigator() {
+      wordNavigator(this);
+    },
 
-      if (!event.ctrlKey && event.code === "Space") {
-        event.preventDefault();
-        charNavigator(this);
-      }
+    charNavigator() {
+      charNavigator(this);
+    },
 
-      if (diacritics.includes(event.key)) {
-        handleDiacritics(event, this);
-      }
+    fatha() {
+      fatha(this);
+    },
+    addDia() {
+      addDia(this, event);
     },
   }));
 });

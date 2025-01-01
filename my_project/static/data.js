@@ -37,5 +37,22 @@ export const ar_alpha = [
   "ي",
 ];
 
-// export const diacritics = ['ِ', 'ٍ', 'َ', 'ً', 'ُ', 'ٌ', 'ْ', 'ّ']
-export const diacritics = 'akbar'.split('')
+export const DIACRITICS_CONFIG = {
+  // Basic diacritics (number keys)
+  num_1: { char: "َ", name: "fatha" },
+  num_2: { char: "ِ", name: "kasra" },
+  num_3: { char: "ُ", name: "damma" },
+  num_4: { char: "ً", name: "tan_fatha" },
+  num_5: { char: "ٍ", name: "tan_kasra" },
+  num_6: { char: "ٌ", name: "tan_damma" },
+  num_7: { char: "ّ", name: "shadda" },
+  num_9: { char: "ْ", name: "sukun" },
+
+  // Shadda combinations (ctrl + number keys)
+  "ctrl+num_1": { char: "َّ", name: "shad_fatha" },
+  "ctrl+num_2": { char: "ِّ", name: "shad_kasra" },
+  "ctrl+num_3": { char: "ُّ", name: "shad_damma" },
+  "ctrl+num_4": { char: "ًّ", name: "shad_tan_fatha" },
+  "ctrl+num_5": { char: "ٍّ", name: "shad_tan_kasra" },
+  "ctrl+num_6": { char: "ٌّ", name: "shad_tan_damma" },
+};

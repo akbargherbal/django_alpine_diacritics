@@ -1,18 +1,35 @@
 // utils.js
-import { ar_alpha, diacritics } from "./data.js";
+import { DIACRITICS_CONFIG } from "./data.js";
 
-export const normalizeIndex = (index, maxLen) => {
-  if (index >= maxLen) return 0;
-  if (index < 0) return maxLen - 1;
-  return index;
+
+// log keyboard:
+export const logEvent = () => {
+  document.addEventListener("keydown", (event) => {
+    const key = event.key;
+    console.log(`Key pressed: ${key}`);
+    console.log(event); // Changed 'e' to 'event'
+  });
+};
+
+export const fatha = (state) => {
+  state.currentDia = "Inserting Arabic Fatha ...";
+};
+
+export const addDia = (state, event) => {
+  const wordIndex = state.wordIndex;
+  const charIndex = state.charIndex;
+  const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
+  const diaElement = wordElement.querySelector(`[data-dia-idx="${charIndex}"]`);
+  const key = recreateKey(event);
+  console.log(key);
+  const diaChar = DIACRITICS_CONFIG[key].char;
+  diaElement.innerHTML = diaChar;
 };
 
 export const wordNavigator = (state) => {
-  state.charIndex = -1;
-  state.wordIndex = normalizeIndex(state.wordIndex + 1, state.tokensCount);
-  state.wordSelected = true;
-
   clearSelections();
+  state.wordIndex = normalizeIndex(state.wordIndex + 1, state.tokensCount);
+
   selectWord(state.wordIndex);
 };
 
@@ -31,13 +48,6 @@ export const charNavigator = (state) => {
   state.charIndex = normalizeIndex(state.charIndex + 1, wordLen);
 
   selectChar(state.wordIndex, state.charIndex);
-};
-
-export const handleDiacritics = (event, state) => {
-  console.log("handleDiacritics called");
-  console.log("Key pressed:", event.key);
-
-  state.currentDia = event.key;
 };
 
 const clearSelections = () => {
@@ -60,19 +70,6 @@ const selectChar = (wordIndex, charIndex) => {
     .classList.add("selected-char");
 };
 
-const addDia = (letter, dia) => {
-  return letter + dia.join("");
-};
-
-// log keyboard:
-export const logEvent = () => {
-  document.addEventListener("keydown", (event) => {
-    const key = event.key;
-    console.log(`Key pressed: ${key}`);
-    console.log(event); // Changed 'e' to 'event'
-  });
-};
-
 const getWordLength = (wordIndex) => {
   const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
   return parseInt(wordElement.getAttribute("data-wd-len"));
@@ -83,4 +80,16 @@ const checkIfWord = (wordIndex) => {
   let isWord = wordElement.getAttribute("data-is-word");
   isWord = isWord === "true" ? true : false;
   return isWord;
+};
+
+const normalizeIndex = (index, maxLen) => {
+  if (index >= maxLen) return 0;
+  if (index < 0) return maxLen - 1;
+  return index;
+};
+
+const recreateKey = (event) => {
+  const ctrl = event.ctrlKey ? "ctrl+" : "";
+  const num = event.key === " " ? "space" : `num_${event.key}`;
+  return ctrl + num;
 };
