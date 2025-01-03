@@ -61,7 +61,7 @@ def text_to_html_spans(text: str) -> str:
            idx_attr = f'data-char-idx="{char_idx}"' if char_is_alpha else ''
            idx_attr_dia = f'data-dia-idx={char_idx}' if char_is_alpha else ''
            
-           html_chars.append(f'<span {idx_attr}class="char">{char}</span><span {idx_attr_dia} class="dia"></span>')
+           html_chars.append(f'<span {idx_attr}class="char">{char}</span><span {idx_attr_dia}></span>')
 
            
        html_word = f'<span class="word" data-is-word="{is_word}" data-wd-idx="{wd_idx}" data-wd-len="{word_len}">{"".join(html_chars)}</span>'

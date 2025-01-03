@@ -1,12 +1,6 @@
 // app.js
 import Alpine from "./node_modules/alpinejs/dist/module.esm.js";
-import {
-  wordNavigator,
-  charNavigator,
-  logEvent,
-  fatha,
-  addDia,
-} from "./utils.js";
+import { wordNavigator, charNavigator, logEvent, addDia } from "./utils.js";
 import { setupHotkeys } from "./hotkeys.js";
 
 window.Alpine = Alpine;
@@ -22,7 +16,6 @@ document.addEventListener("alpine:init", () => {
       setupHotkeys({
         wordNavigator: () => this.wordNavigator(),
         charNavigator: () => this.charNavigator(),
-        fatha: () => this.fatha(),
         addDia: () => this.addDia(),
       });
 
@@ -46,9 +39,6 @@ document.addEventListener("alpine:init", () => {
       charNavigator(this);
     },
 
-    fatha() {
-      fatha(this);
-    },
     addDia() {
       addDia(this, event);
     },

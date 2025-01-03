@@ -1,42 +1,47 @@
 .container {
-    max-width: 1000px;
-    width: 100%;
-    border-style: dashed;
-    padding: 2rem 1rem;
-    margin: 2rem auto;
-  }
+  max-width: 1000px;
+  width: 100%;
+  border-style: dashed;
+  padding: 2rem 1rem;
+  margin: 2rem auto;
+}
 
-  .verse {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
-    text-align: center;
-  }
+.verse {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: center;
+  font-family: "Amiri", serif;
+}
 
-  .word {
-    font-size: 2rem;
-    padding: 0.25rem;
-  }
+.word {
+  font-size: 2rem;
+  padding: 0.25rem;
+}
 
-  .selected-word {
-    background-color: burlywood;
-    padding: 0.5rem;
-  }
+.selected-word {
+  background-color: burlywood;
+  padding: 0.5rem;
+}
 
-  .selected-char {
-    background-color: aqua;
-  }
+.selected-char {
+  background-color: aqua;
+}
 
-  .diacritics span {
-    font-size: 1.5rem;
-    padding: 1rem;
-  }
+.diacritics span {
+  font-size: 1.5rem;
+  padding: 1rem;
+}
 
-  @media (max-width: 768px) {
-    .container {
-      width: 90%;
-      margin: 1rem auto;
-    }
+.dia {
+  color: red !important;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    margin: 1rem auto;
   }
+}

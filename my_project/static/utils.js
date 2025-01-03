@@ -1,7 +1,6 @@
 // utils.js
 import { DIACRITICS_CONFIG } from "./data.js";
 
-
 // log keyboard:
 export const logEvent = () => {
   document.addEventListener("keydown", (event) => {
@@ -9,10 +8,6 @@ export const logEvent = () => {
     console.log(`Key pressed: ${key}`);
     console.log(event); // Changed 'e' to 'event'
   });
-};
-
-export const fatha = (state) => {
-  state.currentDia = "Inserting Arabic Fatha ...";
 };
 
 export const addDia = (state, event) => {
@@ -24,6 +19,7 @@ export const addDia = (state, event) => {
   console.log(key);
   const diaChar = DIACRITICS_CONFIG[key].char;
   diaElement.innerHTML = diaChar;
+  diaElement.classList.add("dia");
 };
 
 export const wordNavigator = (state) => {
