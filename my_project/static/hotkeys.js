@@ -28,4 +28,9 @@ export function setupHotkeys(appFunctions) {
       appFunctions.addDia();
     });
   });
+
+  hotkeys("enter,escape", function (event) {
+    event.preventDefault();
+    appFunctions.toggleEditMode(event);
+  });
 }

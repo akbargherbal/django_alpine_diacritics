@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block page_title %} Page Title Comes Here
 {%endblock page_title %} {% block content %}
 <main dir="rtl">
-  <div class="container" x-data="sentHook" tabindex="0">
+  <div class="container" x-data="sentHook" tabindex="0" :class="{'edit-mode': isEditMode}">
     <div data-tokens-count="{{tokens_count}}" class="verse">
       {{ verse | safe}}
     </div>

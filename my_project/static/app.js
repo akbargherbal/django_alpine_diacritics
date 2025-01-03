@@ -11,12 +11,14 @@ document.addEventListener("alpine:init", () => {
     wordIndex: -1,
     charIndex: -1,
     currentDia: "",
+    isEditMode: false,
 
     init() {
       setupHotkeys({
         wordNavigator: () => this.wordNavigator(),
         charNavigator: () => this.charNavigator(),
         addDia: () => this.addDia(),
+        toggleEditMode: (event) => this.toggleEditMode(event),
       });
 
       this.tokensCount = parseInt(
@@ -27,20 +29,35 @@ document.addEventListener("alpine:init", () => {
         console.table({
           wordIndex: this.wordIndex,
           tokensCount: this.tokensCount,
+          editMode: this.isEditMode,
+          currentDia: this.currentDia,
         });
       });
     },
 
     wordNavigator() {
+      if (!this.isEditMode) return;
       wordNavigator(this);
     },
 
     charNavigator() {
+      if (!this.isEditMode) return;
       charNavigator(this);
     },
 
     addDia() {
+      if (!this.isEditMode) return;
       addDia(this, event);
+    },
+
+    toggleEditMode(event) {
+      if (["Enter", "Space"].includes(event.code)) {
+        this.isEditMode = true;
+      }
+
+      if (event.code === "Escape") {
+        this.isEditMode = false;
+      }
     },
   }));
 });
