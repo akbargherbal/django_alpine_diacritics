@@ -1,6 +1,14 @@
 // app.js
 import Alpine from "./node_modules/alpinejs/dist/module.esm.js";
-import { wordNavigator, charNavigator, logEvent, addDia } from "./utils.js";
+import {
+  wordNavigator,
+  charNavigator,
+  logEvent,
+  addDiaByLocalIndex,
+  addDiaByGlobalIndex,
+  selectDiacriticByGlobalIndex,
+  clearSelections,
+} from "./utils.js";
 import { setupHotkeys } from "./hotkeys.js";
 
 window.Alpine = Alpine;
@@ -8,56 +16,100 @@ window.logEvent = logEvent;
 
 document.addEventListener("alpine:init", () => {
   Alpine.data("sentHook", () => ({
+    wordIsSelected: false,
     wordIndex: -1,
     charIndex: -1,
     currentDia: "",
     isEditMode: false,
+    isAutoPilot: false,
+    globalDiaIndex: 0,
+    totalDiacritics: 0,
+    currentChar: "",
 
     init() {
-      setupHotkeys({
+      // Step 1: Create an object that packages all our functions
+      const functionPackage = {
         wordNavigator: () => this.wordNavigator(),
         charNavigator: () => this.charNavigator(),
         addDia: () => this.addDia(),
-        toggleEditMode: (event) => this.toggleEditMode(event),
-      });
+        toggleEditMode: () => this.toggleEditMode(),
+        toggleAutoPilot: () => this.toggleAutoPilot(),
+      };
+
+      // Step 2: Pass that package to setupHotkeys
+      setupHotkeys(functionPackage);
 
       this.tokensCount = parseInt(
         document.querySelector(".verse").getAttribute("data-tokens-count")
+      );
+
+      this.totalDiacritics = parseInt(
+        document.querySelector(".verse").getAttribute("data-dia-count")
       );
 
       this.$watch("wordIndex", (value, oldValue) => {
         console.table({
           wordIndex: this.wordIndex,
           tokensCount: this.tokensCount,
-          editMode: this.isEditMode,
-          currentDia: this.currentDia,
+          isEditMode: this.isEditMode,
+          isAutoPilot: this.isAutoPilot,
+          globalDiaIndex: this.globalDiaIndex,
         });
       });
     },
 
+    toggleEditMode() {
+      if (event.key === "Enter") {
+        this.isEditMode = true;
+        this.isAutoPilot = false;
+        wordNavigator(this);
+        console.log(
+          `isAutoPilot: ${this.isAutoPilot}; isEditMode: ${this.isEditMode}`
+        );
+      } else if (event.key === "Escape") {
+        this.isEditMode = false;
+        this.isAutoPilot = false;
+        clearSelections();
+      }
+    },
+
+    toggleAutoPilot() {
+      this.isAutoPilot = true;
+      this.isEditMode = false;
+      this.selectDiacriticByGlobalIndex(this.globalDiaIndex);
+      console.log(
+        `isAutoPilot: ${this.isAutoPilot}; isEditMode: ${this.isEditMode}; globalDiaIndex: ${this.globalDiaIndex}`
+      );
+    },
+
     wordNavigator() {
       if (!this.isEditMode) return;
+      if (this.isAutoPilot) return; // Disable in auto-pilot mode
       wordNavigator(this);
     },
 
     charNavigator() {
       if (!this.isEditMode) return;
+      if (this.isAutoPilot) return; // Disable in auto-pilot mode
       charNavigator(this);
     },
 
     addDia() {
-      if (!this.isEditMode) return;
-      addDia(this, event);
+      if (this.isAutoPilot) {
+        addDiaByGlobalIndex(this, event);
+      } else {
+        if (!this.isEditMode) {
+          // console.trace("not in edit mode or autopilot mode; exiting!");
+          return;
+        }
+        addDiaByLocalIndex(this, event);
+        console.trace(`Current Dia ${this.currentDia}`);
+      }
     },
 
-    toggleEditMode(event) {
-      if (["Enter", "Space"].includes(event.code)) {
-        this.isEditMode = true;
-      }
-
-      if (event.code === "Escape") {
-        this.isEditMode = false;
-      }
+    selectDiacriticByGlobalIndex(index) {
+      selectDiacriticByGlobalIndex(index);
+      //  method to highlight first character after isAutoPilot true;
     },
   }));
 });

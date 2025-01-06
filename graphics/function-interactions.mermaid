@@ -1,0 +1,74 @@
+flowchart TB
+    subgraph Alpine["Alpine.js Component (sentHook)"]
+        init["init()"]
+        toggleEM["toggleEditMode()"]
+        toggleAP["toggleAutoPilot()"]
+        wordNav["wordNavigator()"]
+        charNav["charNavigator()"]
+        addDia["addDia()"]
+        selectDia["selectDiacriticByGlobalIndex()"]
+    end
+    
+    subgraph Utils["Utils.js Functions"]
+        direction TB
+        clearSel["clearSelections()"]
+        normIdx["normalizeIndex()"]
+        
+        subgraph WordOps["Word Operations"]
+            wordNavUtil["wordNavigator()"]
+            selectWord["selectWord()"]
+            checkWord["checkIfWord()"]
+            getWordLen["getWordLength()"]
+        end
+        
+        subgraph CharOps["Character Operations"]
+            charNavUtil["charNavigator()"]
+            selectChar["selectChar()"]
+        end
+        
+        subgraph DiaOps["Diacritic Operations"]
+            addDiaLocal["addDiaByLocalIndex()"]
+            addDiaGlobal["addDiaByGlobalIndex()"]
+            updateGlobalSel["updateGlobalSelection()"]
+            selectDiaGlobal["selectDiacriticByGlobalIndex()"]
+            getDiaChar["getDiacriticChar()"]
+            recreateKey["recreateKey()"]
+        end
+    end
+    
+    init --> setupHotkeys
+    
+    toggleEM --> wordNavUtil
+    toggleEM --> clearSel
+    
+    toggleAP --> selectDiaGlobal
+    
+    wordNav --> wordNavUtil
+    wordNavUtil --> clearSel
+    wordNavUtil --> normIdx
+    wordNavUtil --> selectWord
+    wordNavUtil --> selectChar
+    
+    charNav --> charNavUtil
+    charNavUtil --> clearSel
+    charNavUtil --> checkWord
+    charNavUtil --> getWordLen
+    charNavUtil --> normIdx
+    charNavUtil --> selectChar
+    
+    addDia --> addDiaLocal
+    addDia --> addDiaGlobal
+    
+    addDiaLocal --> checkWord
+    addDiaLocal --> getDiaChar
+    
+    addDiaGlobal --> normIdx
+    addDiaGlobal --> getDiaChar
+    addDiaGlobal --> updateGlobalSel
+    
+    updateGlobalSel --> selectDiaGlobal
+    
+    selectDia --> selectDiaGlobal
+    selectDiaGlobal --> clearSel
+    
+    getDiaChar --> recreateKey

@@ -28,9 +28,10 @@
 
 .selected-char {
   background-color: aqua;
+  color: red;
 }
 
-.diacritics span {
+.stats span {
   font-size: 1.5rem;
   padding: 1rem;
 }
@@ -42,6 +43,12 @@
 .edit-mode {
   border-color: green;
   background-color: lightblue;
+}
+
+
+.autopilot-mode {
+  border-color: brown;
+  background-color: lightcyan;
 }
 
 @media (max-width: 768px) {

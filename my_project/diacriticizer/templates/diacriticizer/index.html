@@ -1,11 +1,22 @@
 {% extends 'base.html' %} {% block page_title %} Page Title Comes Here
 {%endblock page_title %} {% block content %}
 <main dir="rtl">
-  <div class="container" x-data="sentHook" tabindex="0" :class="{'edit-mode': isEditMode}">
-    <div data-tokens-count="{{tokens_count}}" class="verse">
+  <div
+    class="container"
+    x-data="sentHook"
+    tabindex="0"
+    :class="{'edit-mode': isEditMode, 'autopilot-mode' : isAutoPilot}"
+  >
+    <div
+      data-tokens-count="{{tokens_count}}"
+      data-dia-count="{{ total_diacritics }}"
+      class="verse"
+    >
       {{ verse | safe}}
     </div>
-    <div class="diacritics"><p><span>الحركة: </span><span x-text="currentDia"></span></p></div>
+    <div class="stats">
+      <p><span>الحركة: </span><span x-text="currentChar"></span></p>
+    </div>
   </div>
 </main>
 {% endblock content %}

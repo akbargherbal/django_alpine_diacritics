@@ -1,0 +1,38 @@
+sequenceDiagram
+    participant KB as Keyboard Event
+    participant HK as Hotkeys.js
+    participant AP as Alpine Component
+    participant UT as Utils.js
+    participant DOM as DOM
+    
+    KB->>HK: Key Press
+    
+    alt Enter Key
+        HK->>AP: toggleEditMode()
+        AP->>UT: wordNavigator()
+        UT->>DOM: Update Selections
+    else Escape Key
+        HK->>AP: toggleEditMode()
+        AP->>UT: clearSelections()
+        UT->>DOM: Remove Selections
+    else Ctrl+A
+        HK->>AP: toggleAutoPilot()
+        AP->>UT: selectDiacriticByGlobalIndex()
+        UT->>DOM: Update Global Selection
+    else Ctrl+Space
+        HK->>AP: wordNavigator()
+        AP->>UT: wordNavigator()
+        UT->>DOM: Update Word Selection
+    else Space
+        HK->>AP: charNavigator()
+        AP->>UT: charNavigator()
+        UT->>DOM: Update Char Selection
+    else Number Keys
+        HK->>AP: addDia()
+        alt Autopilot Mode
+            AP->>UT: addDiaByGlobalIndex()
+        else Edit Mode
+            AP->>UT: addDiaByLocalIndex()
+        end
+        UT->>DOM: Add Diacritic
+    end

@@ -1,7 +1,6 @@
 // hotkeys.js
 import "./node_modules/hotkeys-js/dist/hotkeys.min.js"; // Import the script
 import { DIACRITICS_CONFIG } from "./data.js";
-const hotkeys = window.hotkeys; // Use the global variable
 
 export function setupHotkeys(appFunctions) {
   // Word and character navigation
@@ -15,10 +14,14 @@ export function setupHotkeys(appFunctions) {
     appFunctions.charNavigator();
   });
 
-  // Set up diacritics hotkeys
-  hotkeys("f", function (event) {
+  hotkeys("ctrl+a", function (event) {
     event.preventDefault();
-    appFunctions.fatha();
+    appFunctions.toggleAutoPilot();
+  });
+
+  hotkeys("enter,escape", function (event) {
+    event.preventDefault();
+    appFunctions.toggleEditMode(event);
   });
 
   // Set up diacritics hotkeys
@@ -27,10 +30,5 @@ export function setupHotkeys(appFunctions) {
       event.preventDefault();
       appFunctions.addDia();
     });
-  });
-
-  hotkeys("enter,escape", function (event) {
-    event.preventDefault();
-    appFunctions.toggleEditMode(event);
   });
 }
