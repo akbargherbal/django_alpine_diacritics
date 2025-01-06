@@ -26,9 +26,10 @@ export const Logger = {
     }
 };
 
-// Usage example:
-// Import in your modules:
-// import { Logger } from './logger.js';
-// 
-// Then in your functions:
-// Logger.log('wordNavigator', { wordIndex: this.wordIndex }, 'utils.js');
+export function logFunctionCall() {
+  const error = new Error();
+  const stack = error.stack.split('\n');
+  const functionNameMatch = stack[2].match(/at (.+?) \(/);
+  const functionName = functionNameMatch ? functionNameMatch[1] : 'anonymous function';
+  console.log(`Calling from ${functionName}`);
+}

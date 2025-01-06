@@ -1,0 +1,97 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword.control.export.js", 
+        "settings": {
+          "foreground": "#FF6347", // Tomato color for `export`
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "keyword.control.js",
+        "settings": {
+          "foreground": "#00BFFF", // Deep Sky Blue for `if`, `else`, `return`
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "variable.other.js",
+        "settings": {
+          "foreground": "#FFD700", // Gold for variables
+          "fontStyle": "normal"
+        }
+      },
+      {
+        "scope": "variable.other.object.js",
+        "settings": {
+          "foreground": "#ADFF2F", // Green Yellow for objects
+          "fontStyle": "normal"
+        }
+      },
+      {
+        "scope": "meta.function-call.js",
+        "settings": {
+          "foreground": "#FF69B4", // Hot Pink for function calls like `querySelector`
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "meta.function.js",
+        "settings": {
+          "foreground": "#8A2BE2", // Blue Violet for function names
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "constant.numeric.js",
+        "settings": {
+          "foreground": "#32CD32", // Lime Green for numbers
+          "fontStyle": "normal"
+        }
+      },
+      {
+        "scope": "string.quoted.double.js",
+        "settings": {
+          "foreground": "#D2691E", // Chocolate for string literals
+          "fontStyle": "normal"
+        }
+      },
+      {
+        "scope": "string.quoted.single.js",
+        "settings": {
+          "foreground": "#FF4500", // Orange Red for single quoted strings
+          "fontStyle": "normal"
+        }
+      },
+      {
+        "scope": "comment.line.double-slash.js",
+        "settings": {
+          "foreground": "#808080", // Grey for single-line comments
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "comment.block.js",
+        "settings": {
+          "foreground": "#2F4F4F", // Dark Slate Gray for block comments
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "support.class.js",
+        "settings": {
+          "foreground": "#DC143C", // Crimson for class names
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "support.type.js",
+        "settings": {
+          "foreground": "#1E90FF", // Dodger Blue for type annotations
+          "fontStyle": "normal"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+       {
+        "scope": "keyword.control.export.js",
+        "settings": {
+          "foreground": "#FF7F50",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "keyword.control.js",
+        "settings": {
+          "foreground": "#00BFFF",
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "variable.other.js",
+        "settings": {
+          "foreground": "#F0E68C",
+          "fontStyle": "normal"
+        }
+      },
+      {
+        "scope": "variable.other.object.js",
+        "settings": {
+          "foreground": "#3CB371",
+          "fontStyle": "normal"
+        }
+      },
+       {
+           "scope": "meta.function-call.js",
+           "settings": {
+            "foreground": "#B39DDB", // Light Medium Purple for function calls
+             "fontStyle": "italic"
+          }
+        },
+        {
+         "scope": "meta.function.js",
+         "settings": {
+            "foreground": "#C792EA", // Light Lavender for function names
+            "fontStyle": "bold"
+          }
+        },
+       {
+        "scope": "constant.numeric.js",
+        "settings": {
+          "foreground": "#32CD32",
+          "fontStyle": "normal"
+        }
+      },
+       {
+             "scope": "string.quoted.double.js",
+             "settings": {
+               "foreground": "#E9967A",
+               "fontStyle": "normal"
+            }
+          },
+        {
+            "scope": "string.quoted.single.js",
+            "settings": {
+              "foreground": "#FF7F50",
+              "fontStyle": "normal"
+           }
+        },
+       {
+        "scope": "comment.line.double-slash.js",
+        "settings": {
+          "foreground": "#808080",
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "comment.block.js",
+        "settings": {
+          "foreground": "#2F4F4F",
+          "fontStyle": "italic"
+        }
+      },
+         {
+            "scope": "support.class.js",
+            "settings": {
+              "foreground": "#DC143C",
+              "fontStyle": "bold"
+            }
+          },
+          {
+            "scope": "support.type.js",
+            "settings": {
+             "foreground": "#1E90FF",
+             "fontStyle": "normal"
+            }
+          }
+    ]
+  }
+}

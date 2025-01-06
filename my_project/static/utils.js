@@ -1,16 +1,18 @@
 // utils.js
 import { DIACRITICS_CONFIG } from "./data.js";
-
+import { logFunctionCall } from "./logger.js";
 // ============================
 // Core Navigation Functions
 // ============================
 export function normalizeIndex(index, maxLen) {
+  logFunctionCall();
   if (index >= maxLen) return 0;
   if (index < 0) return maxLen - 1;
   return index;
 }
 
 export function clearSelections() {
+  logFunctionCall();
   document.querySelectorAll("span").forEach((word) => {
     word.classList.remove("selected-word", "selected-char");
   });
@@ -20,6 +22,7 @@ export function clearSelections() {
 // Word-Level Operations
 // ============================
 export function wordNavigator(state) {
+  logFunctionCall();
   clearSelections();
   state.wordIndex = normalizeIndex(state.wordIndex + 1, state.tokensCount);
   state.charIndex = 0;
@@ -29,17 +32,20 @@ export function wordNavigator(state) {
 }
 
 function selectWord(wordIndex) {
+  logFunctionCall();
   document
     .querySelector(`[data-wd-idx="${wordIndex}"]`)
     .classList.add("selected-word");
 }
 
 function getWordLength(wordIndex) {
+  logFunctionCall();
   const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
   return parseInt(wordElement.getAttribute("data-wd-len"));
 }
 
 function checkIfWord(wordIndex) {
+  logFunctionCall();
   try {
     const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
     let isWord = wordElement.getAttribute("data-is-word");
@@ -54,6 +60,7 @@ function checkIfWord(wordIndex) {
 // Character-Level Operations
 // ============================
 export function charNavigator(state) {
+  logFunctionCall();
   if (!state.wordIsSelected) return;
   clearSelections();
 
@@ -69,6 +76,7 @@ export function charNavigator(state) {
 }
 
 function selectChar(wordIndex, charIndex) {
+  logFunctionCall();
   if (!checkIfWord(wordIndex)) return;
   const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
   wordElement
@@ -80,6 +88,7 @@ function selectChar(wordIndex, charIndex) {
 // Diacritic Operations
 // ============================
 export function addDiaByLocalIndex(state, event) {
+  logFunctionCall();
   const { wordIndex, charIndex } = state;
   if (!checkIfWord(wordIndex)) return;
 
@@ -99,6 +108,7 @@ export function addDiaByLocalIndex(state, event) {
 }
 
 export function addDiaByGlobalIndex(state, event) {
+  logFunctionCall();
   const globalDiaIndex = normalizeIndex(
     state.globalDiaIndex,
     state.totalDiacritics
@@ -125,6 +135,7 @@ export function addDiaByGlobalIndex(state, event) {
 }
 
 function updateGlobalSelection(state) {
+  logFunctionCall();
   const charElement = document.querySelector(
     `[data-global-char-idx="${state.globalDiaIndex}"]`
   );
@@ -136,6 +147,7 @@ function updateGlobalSelection(state) {
 }
 
 export function selectDiacriticByGlobalIndex(globalIndex) {
+  logFunctionCall();
   clearSelections();
   const charElement = document.querySelector(
     `[data-global-char-idx="${globalIndex}"]`
@@ -149,11 +161,13 @@ export function selectDiacriticByGlobalIndex(globalIndex) {
 // Helper Functions
 // ============================
 function getDiacriticChar(event) {
+  logFunctionCall();
   const key = recreateKey(event);
   return DIACRITICS_CONFIG[key]?.char;
 }
 
 function recreateKey(event) {
+  logFunctionCall();
   const modifiers = [
     event.ctrlKey && "ctrl",
     event.altKey && "alt",
@@ -162,12 +176,13 @@ function recreateKey(event) {
     .filter(Boolean)
     .join("+");
 
-  const num = event.key === " " ? "space" : `num_${event.key}`;
-  return modifiers ? `${modifiers}+${num}` : num;
+  const key = event.key === " " ? "space" : `num_${event.key}`;
+  return modifiers ? `${modifiers}+${key}` : key;
 }
 
 // Event logging utility
 export const logEvent = () => {
+  logFunctionCall();
   document.addEventListener("keydown", (event) => {
     console.log(`Key pressed: ${event.key}`);
     console.log(event);

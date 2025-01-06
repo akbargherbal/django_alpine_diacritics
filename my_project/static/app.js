@@ -10,6 +10,8 @@ import {
   clearSelections,
 } from "./utils.js";
 import { setupHotkeys } from "./hotkeys.js";
+import { logFunctionCall } from "./logger.js";
+
 
 window.Alpine = Alpine;
 window.logEvent = logEvent;
@@ -28,6 +30,7 @@ document.addEventListener("alpine:init", () => {
 
     init() {
       // Step 1: Create an object that packages all our functions
+      logFunctionCall();
       const functionPackage = {
         wordNavigator: () => this.wordNavigator(),
         charNavigator: () => this.charNavigator(),
@@ -59,6 +62,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     toggleEditMode() {
+      logFunctionCall();
       if (event.key === "Enter") {
         this.isEditMode = true;
         this.isAutoPilot = false;
@@ -74,6 +78,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     toggleAutoPilot() {
+      logFunctionCall();
       this.isAutoPilot = true;
       this.isEditMode = false;
       this.selectDiacriticByGlobalIndex(this.globalDiaIndex);
@@ -83,18 +88,21 @@ document.addEventListener("alpine:init", () => {
     },
 
     wordNavigator() {
+      logFunctionCall();
       if (!this.isEditMode) return;
       if (this.isAutoPilot) return; // Disable in auto-pilot mode
       wordNavigator(this);
     },
 
     charNavigator() {
+      logFunctionCall();
       if (!this.isEditMode) return;
       if (this.isAutoPilot) return; // Disable in auto-pilot mode
       charNavigator(this);
     },
 
     addDia() {
+      logFunctionCall();
       if (this.isAutoPilot) {
         addDiaByGlobalIndex(this, event);
       } else {
@@ -108,6 +116,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     selectDiacriticByGlobalIndex(index) {
+      logFunctionCall();
       selectDiacriticByGlobalIndex(index);
       //  method to highlight first character after isAutoPilot true;
     },
