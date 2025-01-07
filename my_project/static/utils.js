@@ -14,7 +14,7 @@ export function normalizeIndex(index, maxLen) {
 export function clearSelections() {
   logFunctionCall();
   document.querySelectorAll("span").forEach((word) => {
-    word.classList.remove("selected-word", "selected-char");
+    word.classList.remove("selected-word", "selected-char", "blinking-cursor");
   });
 }
 
@@ -25,6 +25,13 @@ export function wordNavigator(state) {
   logFunctionCall();
   clearSelections();
   state.wordIndex = normalizeIndex(state.wordIndex + 1, state.tokensCount);
+  // skip if not a word:
+  if (!checkIfWord(state.wordIndex)) {
+    state.wordIndex = normalizeIndex(state.wordIndex + 1, state.tokensCount);
+    selectWord(state.wordIndex);
+    return;
+  }
+
   state.charIndex = 0;
   state.wordIsSelected = true;
   selectWord(state.wordIndex);
@@ -38,18 +45,15 @@ function selectWord(wordIndex) {
     .classList.add("selected-word");
 }
 
-function getWordLength(wordIndex) {
+function getWordDiaCount(wordIndex) {
   logFunctionCall();
-  const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
-  return parseInt(wordElement.getAttribute("data-wd-len"));
+  return wd_dict[wordIndex].wordDiaCount;
 }
 
 function checkIfWord(wordIndex) {
   logFunctionCall();
   try {
-    const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
-    let isWord = wordElement.getAttribute("data-is-word");
-    return isWord === "true";
+    return wd_dict[wordIndex]["isWord"];
   } catch (error) {
     console.error(`Error checking word at index ${wordIndex}:`, error);
     return false;
@@ -64,14 +68,15 @@ export function charNavigator(state) {
   if (!state.wordIsSelected) return;
   clearSelections();
 
+  // skip token if it's not a word
   if (!checkIfWord(state.wordIndex)) {
     state.wordIndex = normalizeIndex(state.wordIndex + 1, state.tokensCount);
     selectWord(state.wordIndex);
     return;
   }
 
-  const wordLen = getWordLength(state.wordIndex);
-  state.charIndex = normalizeIndex(state.charIndex + 1, wordLen);
+  const wordDiaCount = getWordDiaCount(state.wordIndex);
+  state.charIndex = normalizeIndex(state.charIndex + 1, wordDiaCount);
   selectChar(state.wordIndex, state.charIndex);
 }
 
@@ -81,7 +86,7 @@ function selectChar(wordIndex, charIndex) {
   const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
   wordElement
     .querySelector(`[data-char-idx="${charIndex}"]`)
-    .classList.add("selected-char");
+    .classList.add("selected-char", "blinking-cursor");
 }
 
 // ============================
@@ -98,12 +103,25 @@ export function addDiaByLocalIndex(state, event) {
     `[data-char-idx="${charIndex}"]`
   );
 
+  // If no diaElement or it doesn't have data-dia attribute, skip this position
+  if (!diaElement || !diaElement.hasAttribute("data-dia")) {
+    // Move to next character
+    charNavigator(state);
+    return;
+  }
+
   const diaChar = getDiacriticChar(event);
   if (!diaChar) return;
 
+  // Add validation check
+  if (!validateDiacritic(diaElement, diaChar)) {
+    console.log("Incorrect diacritic");
+    return;
+  }
+
   diaElement.innerHTML = diaChar;
-  diaElement.classList.add("selected-char");
-  charElement.classList.add("selected-char");
+  diaElement.classList.add("selected-char", "blinking-cursor");
+  charElement.classList.add("selected-char", "blinking-cursor");
   state.currentDia = diaChar;
 }
 
@@ -113,14 +131,29 @@ export function addDiaByGlobalIndex(state, event) {
     state.globalDiaIndex,
     state.totalDiacritics
   );
+
   const diaElement = document.querySelector(
     `[data-global-dia-idx="${globalDiaIndex}"]`
   );
-
-  if (!diaElement) return;
+  // If no diaElement or it doesn't have data-dia attribute, move to next position
+  if (!diaElement || !diaElement.hasAttribute("data-dia")) {
+    state.globalDiaIndex = normalizeIndex(
+      globalDiaIndex + 1,
+      state.totalDiacritics
+    );
+    prepareNextDiaPosition(state);
+    console.log(`globalIndex: >>> ${state.globalDiaIndex}`);
+    return;
+  }
 
   const diaChar = getDiacriticChar(event);
   if (!diaChar) return;
+
+  // Add validation check
+  if (!validateDiacritic(diaElement, diaChar)) {
+    console.log("Incorrect diacritic");
+    return;
+  }
 
   diaElement.innerHTML = diaChar;
   diaElement.classList.add("dia");
@@ -131,16 +164,16 @@ export function addDiaByGlobalIndex(state, event) {
     globalDiaIndex + 1,
     state.totalDiacritics
   );
-  updateGlobalSelection(state);
+  prepareNextDiaPosition(state);
 }
 
-function updateGlobalSelection(state) {
+function prepareNextDiaPosition(state) {
   logFunctionCall();
   const charElement = document.querySelector(
     `[data-global-char-idx="${state.globalDiaIndex}"]`
   );
   if (charElement) {
-    charElement.classList.add("selected-char");
+    charElement.classList.add("selected-char", "blinking-cursor");
     selectDiacriticByGlobalIndex(state.globalDiaIndex);
     state.currentChar = charElement.textContent;
   }
@@ -153,8 +186,19 @@ export function selectDiacriticByGlobalIndex(globalIndex) {
     `[data-global-char-idx="${globalIndex}"]`
   );
   if (charElement) {
-    charElement.classList.add("selected-char");
+    charElement.classList.add("selected-char", "blinking-cursor");
   }
+}
+
+// In utils.js
+function validateDiacritic(element, diacriticChar) {
+  // If there's no data-dia attribute, this position shouldn't accept diacritics
+  if (!element.hasAttribute("data-dia")) {
+    return false; // Return false to move to next character
+  }
+
+  const correctDiacritic = element.getAttribute("data-dia");
+  return correctDiacritic === diacriticChar;
 }
 
 // ============================

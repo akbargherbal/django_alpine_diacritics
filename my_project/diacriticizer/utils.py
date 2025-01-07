@@ -1,12 +1,31 @@
-ar_alpha = [
-    'ء', 'آ', 'أ', 'ؤ', 'إ', 'ئ', 'ا', 'ب', 'ة', 'ت', 'ث', 'ج', 'ح', 'خ',
-    'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق',
-    'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ى', 'ي'
-]
+import regex as re
+from collections import defaultdict
+from .ar_data import set_ar_dia, list_ar_alpha
 
-verse = '''
-إن الذي ســـمـــك السماء، (بنى) لنا ... بيتا: دعائمه أعز وأطول
-'''.strip()
+verse = """
+الَّذِينَ يَنقُضُونَ (عَهْدَ) اللَّهِ مِن بَعْدِ مِيثَاقِهِ وَيَقْطَعُونَ مَا أَمَرَ اللَّهُ بِهِ  notowrd أَن يُوصَلَ وَيُفْسِدُونَ فِي الْأَرْضِ ۚ أُولَـٰئِكَ هُمُ الْخَاسِرُونَ
+""".strip()
+
+
+def split_arabic_text(word, set_ar_dia=set_ar_dia):
+    """
+    Split Arabic word into a list of tuples containing (character, diacritics).
+
+    Args:
+        word (str): Arabic word with or without diacritics
+
+    Returns:
+        list: List of tuples where each tuple contains (character, diacritics)
+    """
+    pattern_dia = f'[{"".join(set_ar_dia)}]*'
+    pattern_non_dia = (
+        f'[^{"".join(set_ar_dia)}]'  # Any character that's not a diacritic
+    )
+    pattern = f"{pattern_non_dia}{pattern_dia}"
+
+    matches = re.findall(pattern, word)
+    return [(item[0], item[1:]) if len(item) > 1 else (item[0], "") for item in matches]
+
 
 def text_to_html_spans(text: str) -> tuple[str, int, int]:
     """
@@ -16,34 +35,67 @@ def text_to_html_spans(text: str) -> tuple[str, int, int]:
     list_words = text.split()
     tokens_count = len(list_words)
     html_content = []
-    global_dia_idx = 0  # Initialize global diacritic counter
+    global_dia_idx = 0
+    wd_dict = {}
+    char_dict = defaultdict(dict)
 
-    list_words = [(idx, word) for (idx, word) in enumerate(list_words)]
+    for wd_idx, word in enumerate(list_words):
+        # Split word into characters and their diacritics
+        list_chars_span = split_arabic_text(word)
+        wd_dia_count = len([i for i in list_chars_span if i[1]])
 
-    for (wd_idx, word) in list_words:
         html_chars = []
-        word_len = len([i for i in word if i in ar_alpha])
-        is_word = "true"
-        is_word = "false" if word_len == 0 else is_word
-        char_idx = 0
-        
-        for char in word:
-            char_is_alpha = char in ar_alpha
-            idx_attr = f'data-char-idx="{char_idx}" data-global-char-idx="{global_dia_idx}"' if char_is_alpha else ''
-            
-            
-            # Add global dia index only for actual characters that need diacritics
-            if char_is_alpha:
-                idx_attr_dia = f'data-dia-idx="{char_idx}" data-global-dia-idx="{global_dia_idx}"'
-                char_idx = char_idx + 1 if char_is_alpha else char_idx
-                global_dia_idx += 1  # Increment global counter
-            else:
-                idx_attr_dia = ''
-            
-            html_chars.append(f'<span {idx_attr} class="char">{char}</span><span {idx_attr_dia}></span>')
+        is_word = wd_dia_count > 0
 
-        html_word = f'<span class="word" data-is-word="{is_word}" data-wd-idx="{wd_idx}" data-wd-len="{word_len}">{"".join(html_chars)}</span>'
-        html_content.append(html_word)
-    
+        if is_word:
+            wd_dict[wd_idx] = {"isWord": True, "wordDiaCount": wd_dia_count}
+        else:
+            wd_dict[wd_idx] = {"isWord": False, "wordDiaCount": 0}
+
+        char_idx = 0
+        for char, diacritics in list_chars_span:
+            char_is_alpha = char in list_ar_alpha
+            char_has_dia = diacritics != ""
+
+            if char_is_alpha and char_has_dia:
+                # Handle Arabic chars with diacritics - needs indexing
+                char_span = (
+                    f'<span data-char-idx="{char_idx}" '
+                    f'data-global-char-idx="{global_dia_idx}" '
+                    f'class="char">{char}</span>'
+                )
+
+                dia_span = (
+                    f'<span data-dia-idx="{char_idx}" '
+                    f'data-global-dia-idx="{global_dia_idx}" '
+                    f'data-dia="{diacritics}" '
+                    f'class="char"></span>'
+                )
+
+                char_dict[global_dia_idx]["wd_idx"] = wd_idx
+                char_dict[global_dia_idx]["local_char_idx"] = char_idx
+                char_dict[global_dia_idx]["char"] = char
+                char_dict[global_dia_idx]["in_word"] = is_word
+                char_dict[global_dia_idx]["has_dia"] = True
+                char_dict[global_dia_idx]["dia"] = diacritics
+
+                html_chars.append(char_span + dia_span)
+                char_idx += 1
+                global_dia_idx += 1
+
+            else:
+                # Handle both Arabic chars without diacritics and non-Arabic characters
+                html_chars.append(f'<span class="char">{char}</span>')
+
+        # Combine into word span
+        word_span = (
+            f'<span data-wd-idx="{wd_idx}" '
+            f'class="word">{"".join(html_chars)}</span>'
+        )
+        html_content.append(word_span)
+
+    total_diacritics = global_dia_idx
+    char_dict = dict(char_dict)
+
     html_content = " ".join(html_content)
-    return html_content, tokens_count, global_dia_idx
+    return (html_content, tokens_count, total_diacritics, wd_dict, char_dict)

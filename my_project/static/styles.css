@@ -27,8 +27,12 @@
 }
 
 .selected-char {
-  background-color: aqua;
+  background-color: transparent;
   color: red;
+}
+
+.blinking-cursor {
+  animation: blink 1s step-start infinite;
 }
 
 .stats span {
@@ -45,10 +49,15 @@
   background-color: lightblue;
 }
 
-
 .autopilot-mode {
   border-color: brown;
   background-color: lightcyan;
+}
+
+@keyframes blink {
+  50% {
+    background-color: aqua;
+  }
 }
 
 @media (max-width: 768px) {

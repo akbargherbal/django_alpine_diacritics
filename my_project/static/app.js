@@ -12,7 +12,6 @@ import {
 import { setupHotkeys } from "./hotkeys.js";
 import { logFunctionCall } from "./logger.js";
 
-
 window.Alpine = Alpine;
 window.logEvent = logEvent;
 
@@ -31,6 +30,25 @@ document.addEventListener("alpine:init", () => {
     init() {
       // Step 1: Create an object that packages all our functions
       logFunctionCall();
+      const wd_dict = JSON.parse(
+        document.getElementById("wd_dict").textContent
+      );
+      const char_dict = JSON.parse(
+        document.getElementById("char_dict").textContent
+      );
+      this.tokensCount = parseInt(
+        document.querySelector(".verse").getAttribute("data-tokens-count")
+      );
+
+      this.totalDiacritics = parseInt(
+        document.querySelector(".verse").getAttribute("data-dia-count")
+      );
+
+      console.log(wd_dict);
+      console.log(char_dict);
+      window.wd_dict = wd_dict;
+      window.char_dict = char_dict;
+
       const functionPackage = {
         wordNavigator: () => this.wordNavigator(),
         charNavigator: () => this.charNavigator(),
@@ -41,14 +59,6 @@ document.addEventListener("alpine:init", () => {
 
       // Step 2: Pass that package to setupHotkeys
       setupHotkeys(functionPackage);
-
-      this.tokensCount = parseInt(
-        document.querySelector(".verse").getAttribute("data-tokens-count")
-      );
-
-      this.totalDiacritics = parseInt(
-        document.querySelector(".verse").getAttribute("data-dia-count")
-      );
 
       this.$watch("wordIndex", (value, oldValue) => {
         console.table({

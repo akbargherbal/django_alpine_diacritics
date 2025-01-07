@@ -8,7 +8,7 @@
     :class="{'edit-mode': isEditMode, 'autopilot-mode' : isAutoPilot}"
   >
     <div
-      data-tokens-count="{{tokens_count}}"
+      data-tokens-count="{{ tokens_count }}"
       data-dia-count="{{ total_diacritics }}"
       class="verse"
     >
@@ -19,4 +19,8 @@
     </div>
   </div>
 </main>
+{{ wd_dict|json_script:"wd_dict" }}
+{{ char_dict|json_script:"char_dict" }}
+
+
 {% endblock content %}
