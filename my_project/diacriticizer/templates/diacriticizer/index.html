@@ -20,7 +20,9 @@
   </div>
 </main>
 {{ wd_dict|json_script:"wd_dict" }}
-{{ char_dict|json_script:"char_dict" }}
+{{ char_dict_global|json_script:"char_dict_global" }}
+{{ char_dict_local|json_script:"char_dict_local" }}
+
 
 
 {% endblock content %}

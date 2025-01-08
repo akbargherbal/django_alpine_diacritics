@@ -45,8 +45,8 @@ export const DIACRITICS_CONFIG = {
   num_4: { char: "ً", name: "tan_fatha" },
   num_5: { char: "ٍ", name: "tan_kasra" },
   num_6: { char: "ٌ", name: "tan_damma" },
-  num_7: { char: "ّ", name: "shadda" },
-  num_9: { char: "ْ", name: "sukun" },
+  num_9: { char: "ّ", name: "shadda" },
+  num_0: { char: "ْ", name: "sukun" },
 
   // Shadda combinations (ctrl + number keys)
   "ctrl+num_1": { char: "َّ", name: "shad_fatha" },

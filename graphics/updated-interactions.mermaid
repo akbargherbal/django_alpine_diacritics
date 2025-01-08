@@ -6,19 +6,25 @@ flowchart TB
         wordNav["wordNavigator()"]
         charNav["charNavigator()"]
         addDia["addDia()"]
-        selectDia["selectDiacriticByGlobalIndex()"]
+        currentDia["currentDia"]
+        wordIndex["wordIndex"]
+        charIndex["charIndex"]
+        isEditMode["isEditMode"]
+        isAutoPilot["isAutoPilot"]
+        globalDiaIndex["globalDiaIndex"]
     end
     
     subgraph Utils["Utils.js Functions"]
         direction TB
         clearSel["clearSelections()"]
         normIdx["normalizeIndex()"]
+        logEvent["logEvent()"]
         
         subgraph WordOps["Word Operations"]
             wordNavUtil["wordNavigator()"]
             selectWord["selectWord()"]
             checkWord["checkIfWord()"]
-            getWordLen["getWordLength()"]
+            getWordLen["getWordDiaCount()"]
         end
         
         subgraph CharOps["Character Operations"]
@@ -29,17 +35,22 @@ flowchart TB
         subgraph DiaOps["Diacritic Operations"]
             addDiaLocal["addDiaByLocalIndex()"]
             addDiaGlobal["addDiaByGlobalIndex()"]
-            updateGlobalSel["updateGlobalSelection()"]
+            prepareNext["prepareNextDiaPosition()"]
             selectDiaGlobal["selectDiacriticByGlobalIndex()"]
             getDiaChar["getDiacriticChar()"]
             recreateKey["recreateKey()"]
+            validateDia["validateDiacritic()"]
         end
     end
     
-    init --> setupHotkeys
+    subgraph Hotkeys["Hotkeys.js"]
+        setupKeys["setupHotkeys()"]
+    end
     
-    toggleEM --> wordNavUtil
+    init --> setupKeys
+    
     toggleEM --> clearSel
+    toggleEM --> wordNavUtil
     
     toggleAP --> selectDiaGlobal
     
@@ -61,14 +72,15 @@ flowchart TB
     
     addDiaLocal --> checkWord
     addDiaLocal --> getDiaChar
+    addDiaLocal --> validateDia
+    addDiaLocal --> charNavUtil
     
     addDiaGlobal --> normIdx
     addDiaGlobal --> getDiaChar
-    addDiaGlobal --> updateGlobalSel
-    
-    updateGlobalSel --> selectDiaGlobal
-    
-    selectDia --> selectDiaGlobal
-    selectDiaGlobal --> clearSel
+    addDiaGlobal --> validateDia
+    addDiaGlobal --> prepareNext
     
     getDiaChar --> recreateKey
+    
+    prepareNext --> selectDiaGlobal
+    selectDiaGlobal --> clearSel

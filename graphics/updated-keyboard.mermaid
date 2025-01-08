@@ -9,30 +9,43 @@ sequenceDiagram
     
     alt Enter Key
         HK->>AP: toggleEditMode()
+        AP->>AP: isEditMode = true
+        AP->>AP: isAutoPilot = false
         AP->>UT: wordNavigator()
         UT->>DOM: Update Selections
     else Escape Key
         HK->>AP: toggleEditMode()
+        AP->>AP: isEditMode = false
+        AP->>AP: isAutoPilot = false
         AP->>UT: clearSelections()
         UT->>DOM: Remove Selections
     else Ctrl+A
         HK->>AP: toggleAutoPilot()
+        AP->>AP: isAutoPilot = true
+        AP->>AP: isEditMode = false
         AP->>UT: selectDiacriticByGlobalIndex()
         UT->>DOM: Update Global Selection
     else Ctrl+Space
         HK->>AP: wordNavigator()
         AP->>UT: wordNavigator()
-        UT->>DOM: Update Word Selection
+        UT->>UT: normalizeIndex()
+        UT->>UT: checkIfWord()
+        UT->>DOM: Update Word & Char Selection
     else Space
         HK->>AP: charNavigator()
         AP->>UT: charNavigator()
+        UT->>UT: normalizeIndex()
         UT->>DOM: Update Char Selection
     else Number Keys
         HK->>AP: addDia()
         alt Autopilot Mode
             AP->>UT: addDiaByGlobalIndex()
+            UT->>UT: validateDiacritic()
+            UT->>UT: prepareNextDiaPosition()
         else Edit Mode
             AP->>UT: addDiaByLocalIndex()
+            UT->>UT: validateDiacritic()
+            UT->>UT: charNavigator()
         end
-        UT->>DOM: Add Diacritic
+        UT->>DOM: Update Diacritic
     end

@@ -37,7 +37,8 @@ def text_to_html_spans(text: str) -> tuple[str, int, int]:
     html_content = []
     global_dia_idx = 0
     wd_dict = {}
-    char_dict = defaultdict(dict)
+    char_dict_global = defaultdict(dict)
+    char_dict_local = defaultdict(dict)
 
     for wd_idx, word in enumerate(list_words):
         # Split word into characters and their diacritics
@@ -72,12 +73,19 @@ def text_to_html_spans(text: str) -> tuple[str, int, int]:
                     f'class="char"></span>'
                 )
 
-                char_dict[global_dia_idx]["wd_idx"] = wd_idx
-                char_dict[global_dia_idx]["local_char_idx"] = char_idx
-                char_dict[global_dia_idx]["char"] = char
-                char_dict[global_dia_idx]["in_word"] = is_word
-                char_dict[global_dia_idx]["has_dia"] = True
-                char_dict[global_dia_idx]["dia"] = diacritics
+                char_data = {
+                    "char": char,
+                    "dia": diacritics,
+                    "in_word": is_word,
+                    "has_dia": True,
+                    "wd_idx": wd_idx,
+                    "local_char_idx": char_idx,
+                    "global_dia_idx": global_dia_idx,
+                }
+
+                char_dict_global[global_dia_idx] = char_data
+                local_key = f"{wd_idx}_{char_idx}"
+                char_dict_local[local_key] = char_data
 
                 html_chars.append(char_span + dia_span)
                 char_idx += 1
@@ -95,7 +103,15 @@ def text_to_html_spans(text: str) -> tuple[str, int, int]:
         html_content.append(word_span)
 
     total_diacritics = global_dia_idx
-    char_dict = dict(char_dict)
+    char_dict_global = dict(char_dict_global)
+    char_dict_local = dict(char_dict_local)
 
     html_content = " ".join(html_content)
-    return (html_content, tokens_count, total_diacritics, wd_dict, char_dict)
+    return (
+        html_content,
+        tokens_count,
+        total_diacritics,
+        wd_dict,
+        char_dict_global,
+        char_dict_local,
+    )

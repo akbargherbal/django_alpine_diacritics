@@ -1,0 +1,45 @@
+flowchart TB
+    subgraph UI["User Interface"]
+        NumKey["Number Key Press"]
+        EditMode["Edit Mode"]
+        AutoMode["Auto-Pilot Mode"]
+    end
+
+    subgraph AddDia["addDia() Alpine Method"]
+        CheckMode{"Check Mode"}
+        AddLocal["addDiaByLocalIndex()"]
+        AddGlobal["addDiaByGlobalIndex()"]
+    end
+
+    subgraph LocalFlow["Local Index Flow"]
+        GetWord["Get Word Element"]
+        GetDiaElement["Get Diacritic Element"]
+        ValidateLocal{"Validate Diacritic"}
+        UpdateLocal["Update DOM & Move Next"]
+        CharNav["charNavigator()"]
+    end
+
+    subgraph GlobalFlow["Global Index Flow"]
+        GetGlobalElement["Get Global Element"]
+        ValidateGlobal{"Validate Diacritic"}
+        UpdateGlobal["Update DOM"]
+        PrepNext["prepareNextDiaPosition()"]
+        SelectNext["selectDiacriticByGlobalIndex()"]
+    end
+
+    NumKey --> AddDia
+    CheckMode -->|"Edit Mode"| AddLocal
+    CheckMode -->|"Auto-Pilot"| AddGlobal
+    
+    AddLocal --> GetWord
+    GetWord --> GetDiaElement
+    GetDiaElement --> ValidateLocal
+    ValidateLocal -->|"Valid"| UpdateLocal
+    ValidateLocal -->|"Invalid"| CharNav
+    
+    AddGlobal --> GetGlobalElement
+    GetGlobalElement --> ValidateGlobal
+    ValidateGlobal -->|"Valid"| UpdateGlobal
+    ValidateGlobal -->|"Invalid"| PrepNext
+    UpdateGlobal --> PrepNext
+    PrepNext --> SelectNext

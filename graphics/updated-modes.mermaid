@@ -1,0 +1,39 @@
+stateDiagram-v2
+    [*] --> NormalMode: Initial State
+    
+    NormalMode --> EditMode: Enter
+    EditMode --> NormalMode: Escape
+    
+    NormalMode --> AutopilotMode: Ctrl+A
+    AutopilotMode --> NormalMode: Escape
+    
+    state EditMode {
+        [*] --> WordSelection
+        WordSelection --> CharacterSelection: Space
+        CharacterSelection --> DiacriticInput: Number Keys
+        WordSelection --> WordSelection: Ctrl+Space
+        CharacterSelection --> CharacterSelection: Space
+        DiacriticInput --> CharacterSelection: Auto Advance
+    }
+    
+    state AutopilotMode {
+        [*] --> GlobalNavigation
+        GlobalNavigation --> DiacriticValidation: Number Keys
+        DiacriticValidation --> GlobalAdvance: Valid Input
+        GlobalAdvance --> GlobalNavigation: Auto Advance
+        DiacriticValidation --> GlobalNavigation: Invalid Input
+    }
+    
+    note right of EditMode
+        Manual mode:
+        - Word-by-word navigation
+        - Character-by-character input
+        - Local validation
+    end note
+    
+    note right of AutopilotMode
+        Sequential mode:
+        - Automatic position tracking
+        - Global validation
+        - Auto-advances after input
+    end note
