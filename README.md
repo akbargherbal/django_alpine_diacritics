@@ -1,57 +1,101 @@
+# Arabic Text Diacritization Web Application
+
 I'm working on a learning project to build an Arabic text diacritization web application. As a Python developer with 5+ years of experience but limited front-end knowledge (<1 year), I'm using Django for the backend and AlpineJS for the front end. My approach prioritizes keeping JavaScript code minimal while achieving necessary real-time interactivity.
 
-The application's core purpose is to enable fast, streamlined addition of diacritical marks (تشكيل) to Arabic text. The backend (Django) serves pre-structured HTML with comprehensive data attributes, while the front end (AlpineJS/JS) handles essential real-time interactions like keyboard navigation and diacritic insertion. The project currently uses keyboard shortcuts for efficiency (e.g., Ctrl+Space for word navigation, Space for character navigation, number keys for diacritics).
+## Project Overview
 
-My development preferences are:
+The application's core purpose is to enable fast, streamlined addition of diacritical marks (تشكيل) to Arabic text. The architecture employs a hybrid approach:
 
-1. Keep JavaScript minimal - use frameworks/libraries (AlpineJS, hotkeys-js) to reduce custom JS code
-2. Leverage Django's capabilities - generate complex structure and data attributes server-side
-3. Focus on essential real-time interactions that can't be handled by the backend
-4. Take an iterative approach to adding features
-5. Maintain clean separation between backend and frontend responsibilities
+1. **Backend (Django)**: 
+   - Serves pre-structured HTML with comprehensive data attributes
+   - Generates structured dictionaries (wd_dict, char_dict_global, char_dict_local) for efficient data access
+   - Pre-computes indices and relationships between text elements
 
-The application uses a sophisticated data-attribute system where Django generates HTML marking each Arabic character and its corresponding diacritic position using both local indices (within words) and global indices (across the entire text). The HTML structure uses spans with data attributes like data-wd-idx for words, data-char-idx for characters, data-dia-idx for local diacritic positions, and data-global-dia-idx for global diacritic tracking.
+2. **Frontend (AlpineJS/JS)**:
+   - Handles essential real-time interactions (keyboard navigation, diacritic insertion)
+   - Accesses structured data via JSON-parsed dictionaries
+   - Uses data attributes for DOM manipulation and visual state
 
-The frontend implements two modes of operation: manual and auto-pilot. In manual mode, users navigate through words (Ctrl+Space) and characters (Space) to select positions for adding diacritical marks. In auto-pilot mode, the application automatically moves through diacritic positions sequentially using the global indices. Both modes require users to first enter edit mode (Enter key) before adding diacritics (number keys, with Ctrl+number for shadda combinations), and they can exit edit mode using the Escape key. The interaction layer is handled by AlpineJS, which manages state (wordIndex, charIndex, isEditMode, isAutoPilot, globalDiaIndex) and coordinates with utility functions for navigation and diacritic insertion.
+### Data Transfer Strategy
 
-I am a Python developer with 5+ years of experience, specializing in Django for backend development. My frontend experience is limited (less than 1 year), and I have a strong preference for minimizing JavaScript usage.
+The application uses two complementary approaches for backend-frontend data transfer:
 
-Key Characteristics:
+1. **Data Attributes**: 
+   - HTML elements are marked with attributes like `data-wd-idx`, `data-char-idx`, `data-dia-idx`, and `data-global-dia-idx`
+   - Used primarily for DOM selection and visual state management
+   - Enables quick element lookup and state indication
 
-1. Strong preference for server-side logic over client-side
-2. Expert in leveraging Django's template system and context processors
-3. Advocate for using HTML data attributes to encode state and behavior
-4. Comfortable with AlpineJS for minimal state management and UI interactions
-5. Strong belief in pushing complexity to the server where possible
+2. **JSON-Serialized Dictionaries**:
+   - `wd_dict`: Word-level information (isWord flag, diacritic count)
+   - `char_dict_global`: Character information indexed by global position
+   - `char_dict_local`: Character information indexed by word and character position
+   - Enables efficient data lookup without DOM traversal
+   - Provides rich metadata for validation and navigation logic
 
-Technical Preferences:
+### Operation Modes
 
-- Backend: Django with emphasis on template-driven development
-- Frontend: AlpineJS for lightweight interactivity
-- Programming Style: Procedural Python, minimal OOP
-- Architecture: Server-driven UI, pre-computed properties in data attributes
-- JavaScript: Use only when necessary, prefer declarative over imperative
+The frontend implements two modes of operation:
 
-Development Philosophy:
+1. **Manual Mode**:
+   - Word navigation (Ctrl+Space)
+   - Character navigation (Space)
+   - User-controlled position selection
 
-- "If it can be done in Django templates or Python, do it there"
-- "Use data attributes to bridge backend and frontend"
-- "Keep JavaScript minimal and declarative with AlpineJS"
-- "Pre-compute as much as possible on the server"
-- "Leverage Django's template system to its fullest"
+2. **Auto-pilot Mode**:
+   - Automatic sequential navigation through diacritic positions
+   - Uses global indices for position tracking
+   - Streamlined input workflow
+
+Both modes require entering edit mode (Enter key) before adding diacritics (number keys, with Ctrl+number for shadda combinations). Users can exit edit mode using the Escape key.
+
+## Development Philosophy
+
+As a Python/Django developer with limited frontend experience, my approach emphasizes:
+
+1. **Server-Side First**:
+   - Push complexity to Django where possible
+   - Pre-compute relationships and metadata
+   - Generate structured data server-side
+
+2. **Minimal JavaScript**:
+   - Use AlpineJS for state management
+   - Keep client-side code declarative
+   - Focus on essential real-time interactions
+
+3. **Hybrid Data Strategy**:
+   - Use data attributes for DOM-related operations
+   - Use structured dictionaries for complex data relationships
+   - Keep data access efficient and organized
+
+4. **Clean Architecture**:
+   - Clear separation of concerns
+   - Well-defined data flow
+   - Maintainable and extensible design
+
+## Technical Preferences
+
+- **Backend**: Django with emphasis on template-driven development
+- **Frontend**: AlpineJS for lightweight interactivity
+- **Programming Style**: Procedural Python, minimal OOP
+- **Architecture**: Server-driven UI with hybrid data transfer
+- **JavaScript**: Use only when necessary, prefer declarative patterns
+
+## Solution Guidelines
 
 When suggesting solutions:
 
 1. Prioritize Django template solutions over JavaScript
-2. Use data attributes for state and configuration
+2. Leverage both data attributes and structured dictionaries appropriately
 3. Keep AlpineJS code focused on simple state management
 4. Prefer server-side pre-computation
-5. Avoid complex JavaScript patterns or heavy client-side logic
+5. Avoid complex JavaScript patterns
 
-Do not suggest:
+## What to Avoid
 
 - Complex JavaScript solutions when Django templates can handle it
 - Heavy client-side frameworks (React, Vue, Angular)
 - Object-oriented JavaScript patterns
 - Complex state management libraries
 - Client-side routing or SPA architectures
+
+This project demonstrates how to build interactive web applications while maintaining a backend-centric approach, using a hybrid data strategy to balance performance and maintainability.
