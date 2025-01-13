@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <!-- Background Patterns -->
+    <defs>
+        <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="#FFE5D9" />
+        </pattern>
+        <pattern id="arabicPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M25,0 Q50,25 25,50 Q0,25 25,0" fill="none" stroke="#FFB4A2" stroke-width="0.5" />
+        </pattern>
+    </defs>
+    
+    <!-- Main Background -->
+    <rect width="800" height="600" fill="#FFFFFF" />
+    <rect width="800" height="600" fill="url(#dots)" opacity="0.5" />
+    <rect width="800" height="600" fill="url(#arabicPattern)" opacity="0.3" />
+    
+    <!-- Decorative Shapes -->
+    <g id="decorative-shapes">
+        <circle cx="100" cy="100" r="80" fill="#FFB4A2" opacity="0.2" />
+        <circle cx="700" cy="500" r="120" fill="#E5989B" opacity="0.1" />
+        <path d="M600,50 Q650,0 700,50 T800,50" fill="none" stroke="#B5838D" stroke-width="2" opacity="0.3" />
+    </g>
+    
+    <!-- Mode Cards -->
+    <g id="training-card" transform="translate(150, 200)">
+        <rect width="200" height="250" rx="20" fill="#FFFFFF" stroke="#B5838D" stroke-width="2" />
+        <!-- Training Icon -->
+        <circle cx="100" cy="80" r="40" fill="#FFB4A2" />
+        <path d="M80,80 L120,80 M100,60 L100,100" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+        <text x="100" y="150" text-anchor="middle" font-size="18" fill="#6D6875">Training Mode</text>
+        <!-- Button -->
+        <rect x="30" y="180" width="140" height="40" rx="20" fill="#B5838D" />
+        <text x="100" y="205" text-anchor="middle" font-size="14" fill="#FFFFFF">Start Training</text>
+    </g>
+    
+    <g id="diacritization-card" transform="translate(450, 200)">
+        <rect width="200" height="250" rx="20" fill="#FFFFFF" stroke="#B5838D" stroke-width="2" />
+        <!-- Diacritization Icon -->
+        <circle cx="100" cy="80" r="40" fill="#E5989B" />
+        <path d="M80,80 Q100,60 120,80 Q100,100 80,80" fill="none" stroke="#FFFFFF" stroke-width="4" />
+        <text x="100" y="150" text-anchor="middle" font-size="18" fill="#6D6875">Diacritization Mode</text>
+        <!-- Button -->
+        <rect x="30" y="180" width="140" height="40" rx="20" fill="#B5838D" />
+        <text x="100" y="205" text-anchor="middle" font-size="14" fill="#FFFFFF">Start Diacritizing</text>
+    </g>
+    
+    <!-- Header -->
+    <text x="400" y="100" text-anchor="middle" font-size="32" fill="#6D6875" font-weight="bold">Arabic Text Diacritization</text>
+    <text x="400" y="140" text-anchor="middle" font-size="18" fill="#6D6875">Add diacritical marks (تشكيل) to Arabic text</text>
+    
+    <!-- Navigation Icons -->
+    <g id="nav-icons" transform="translate(650, 50)">
+        <circle cx="0" cy="0" r="15" fill="#B5838D" />
+        <circle cx="40" cy="0" r="15" fill="#B5838D" />
+        <circle cx="80" cy="0" r="15" fill="#B5838D" />
+    </g>
+</svg>

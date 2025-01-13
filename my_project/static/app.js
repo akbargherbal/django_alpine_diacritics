@@ -23,6 +23,7 @@ document.addEventListener("alpine:init", () => {
     globalDiaIndex: 0,
     totalDiacritics: 0,
     currentChar: "",
+    mode: "",
 
     init() {
       // Step 1: Create an object that packages all our functions
@@ -46,10 +47,13 @@ document.addEventListener("alpine:init", () => {
         document.querySelector(".verse").getAttribute("data-dia-count")
       );
 
+      this.mode = document.querySelector(".verse").getAttribute("data-mode");
+
       // remove later;
       console.log(wd_dict);
       console.log(char_dict_global);
       console.log(char_dict_local);
+      console.log(`Mode: ${this.mode}`)
       window.wd_dict = wd_dict;
       window.char_dict_global = char_dict_global;
       window.char_dict_local = char_dict_local;

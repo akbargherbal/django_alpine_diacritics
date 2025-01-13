@@ -1,11 +1,3 @@
-import regex as re
-from .ar_data import set_ar_dia, list_ar_alpha
-
-verse = """
-الَّذِينَ يَنقُضُونَ (عَهْدَ) اللَّهِ مِن بَعْدِ مِيثَاقِهِ وَيَقْطَعُونَ مَا أَمَرَ اللَّهُ بِهِ  notowrd أَن يُوصَلَ وَيُفْسِدُونَ فِي الْأَرْضِ ۚ أُولَـٰئِكَ هُمُ الْخَاسِرُونَ
-""".strip()
-
-
 def split_arabic_text(word: str, set_ar_dia: set = set_ar_dia) -> list[tuple[str, str]]:
     """Split Arabic word into (character, diacritics) tuples."""
     pattern_dia = f'[{"".join(set_ar_dia)}]*'
@@ -39,19 +31,28 @@ def create_word_span(html_chars: list[str], wd_idx: int) -> str:
     return f'<span data-wd-idx="{wd_idx}" ' f'class="word">{"".join(html_chars)}</span>'
 
 
-def char_has_dia(char, dia, mode):
-    if mode == "train" and char in list_ar_alpha and dia:
-        return True
-    elif mode == "dicr" and char in list_ar_alpha:
-        return True
-    else:
-        return False
+def get_char_data(
+    char: str,
+    diacritics: str,
+    is_word: bool,
+    wd_idx: int,
+    char_idx: int,
+    global_dia_idx: int,
+) -> dict:
+    """Create metadata for a character."""
+    return {
+        "char": char,
+        "dia": diacritics,
+        "in_word": is_word,
+        "has_dia": bool(diacritics),
+        "wd_idx": wd_idx,
+        "local_char_idx": char_idx,
+        "global_dia_idx": global_dia_idx,
+    }
 
 
-def text_to_html_spans(text, mode="dicr"):
-    if mode not in ["dicr", "train"]:
-        raise ValueError("Mode must be either 'dicr' or 'train'")
-
+def text_to_spans_train(text: str) -> tuple[str, int, int, dict, dict, dict]:
+    """Convert text to HTML spans for training, preserving original diacritics."""
     list_words = text.split()
     tokens_count = len(list_words)
     html_content = []
@@ -62,12 +63,7 @@ def text_to_html_spans(text, mode="dicr"):
 
     for wd_idx, word in enumerate(list_words):
         list_chars_span = split_arabic_text(word)
-
-        # This is the only difference between train and dic modes
-        if mode == "train":
-            wd_dia_count = len([i for i in list_chars_span if i[1]])
-        else:  # dicr mode
-            wd_dia_count = len([i for i in list_chars_span if i[0] in list_ar_alpha])
+        wd_dia_count = len([i for i in list_chars_span if i[1]])
 
         html_chars = []
         is_word = wd_dia_count > 0
@@ -77,21 +73,15 @@ def text_to_html_spans(text, mode="dicr"):
         char_idx = 0
         for char, diacritics in list_chars_span:
             char_is_alpha = char in list_ar_alpha
-            has_dia = char_has_dia(char, diacritics, mode)
+            char_has_dia = bool(diacritics)
 
-            if char_is_alpha and has_dia:
+            if char_is_alpha and char_has_dia:
                 char_span = create_char_span(char, char_idx, global_dia_idx)
                 dia_span = create_dia_span(diacritics, char_idx, global_dia_idx)
 
-                char_data = {
-                    "char": char,
-                    "dia": diacritics,
-                    "in_word": is_word,
-                    "has_dia": True,
-                    "wd_idx": wd_idx,
-                    "local_char_idx": char_idx,
-                    "global_dia_idx": global_dia_idx,
-                }
+                char_data = get_char_data(
+                    char, diacritics, is_word, wd_idx, char_idx, global_dia_idx
+                )
 
                 char_dict_global[global_dia_idx] = char_data
                 char_dict_local[f"{wd_idx}_{char_idx}"] = char_data
@@ -104,12 +94,11 @@ def text_to_html_spans(text, mode="dicr"):
 
         word_span = create_word_span(html_chars, wd_idx)
         html_content.append(word_span)
-        total_diacritics = global_dia_idx
 
     return (
         " ".join(html_content),
         tokens_count,
-        total_diacritics,
+        global_dia_idx,
         wd_dict,
         char_dict_global,
         char_dict_local,

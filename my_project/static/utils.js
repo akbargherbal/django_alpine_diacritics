@@ -63,6 +63,16 @@ function charNavigator(state) {
   const wordDiaCount = getWordDiaCount(state.wordIndex);
   state.charIndex = normalizeIndex(state.charIndex + 1, wordDiaCount);
   selectChar(state.wordIndex, state.charIndex);
+  const wordElement = document.querySelector(
+    `[data-wd-idx="${state.wordIndex}"]`
+  );
+  const charElement = wordElement.querySelector(
+    `[data-char-idx="${state.charIndex}"]`
+  );
+  state.globalDiaIndex = parseInt(
+    charElement.getAttribute("data-global-char-idx")
+  );
+  console.log(`Current Global Index: ${state.globalDiaIndex}`);
 }
 
 function selectChar(wordIndex, charIndex) {
@@ -82,14 +92,13 @@ function addDiaByLocalIndex(state, event) {
 
   const globalCharIndex =
     char_dict_local[`${wordIndex}_${charIndex}`]["global_dia_idx"];
-
+  state.globalDiaIndex = globalCharIndex;
   const diaChar = getDiacriticChar(event);
   if (!diaChar) return;
 
   // Add validation check
-  if (!validateDiacritic(globalCharIndex, diaChar)) {
+  if (state.mode === "train" && !validateDiacritic(globalCharIndex, diaChar))
     return;
-  }
 
   const wordElement = document.querySelector(`[data-wd-idx="${wordIndex}"]`);
   const diaElement = wordElement.querySelector(`[data-dia-idx="${charIndex}"]`);
@@ -104,37 +113,41 @@ function addDiaByLocalIndex(state, event) {
 
 function addDiaByGlobalIndex(state, event) {
   clearSelections();
-  const globalDiaIndex = normalizeIndex(
+  state.globalDiaIndex = normalizeIndex(
     state.globalDiaIndex,
     state.totalDiacritics
   );
 
+  state.wordIndex = char_dict_global[state.globalDiaIndex]["wd_idx"];
+  state.charIndex = char_dict_global[state.globalDiaIndex]["local_char_idx"];
+
   // skip if it has no diacritics.
-  if (!char_dict_global[globalDiaIndex]["has_dia"]) {
+  if (!char_dict_global[state.globalDiaIndex]["has_dia"]) {
     addDiaByGlobalIndex(state, event);
     return;
   }
 
-  const diaElement = document.querySelector(
-    `[data-global-dia-idx="${globalDiaIndex}"]`
-  );
-
-  cursor(state.globalDiaIndex);
+  cursor(state.globalDiaIndex, state.totalDiacritics);
 
   const diaChar = getDiacriticChar(event);
   if (!diaChar) return;
 
   // Add validation check
-  if (!validateDiacritic(globalDiaIndex, diaChar)) {
+  if (
+    state.mode === "train" &&
+    !validateDiacritic(state.globalDiaIndex, diaChar)
+  )
     return;
-  }
 
+  const diaElement = document.querySelector(
+    `[data-global-dia-idx="${state.globalDiaIndex}"]`
+  );
   diaElement.innerHTML = diaChar;
   diaElement.classList.add("dia");
   state.currentDia = diaChar;
 
   state.globalDiaIndex = state.globalDiaIndex + 1;
-  cursor(state.globalDiaIndex);
+  cursor(state.globalDiaIndex, state.totalDiacritics);
 }
 
 function validateDiacritic(globalCharIDX, diacriticChar) {
@@ -142,12 +155,17 @@ function validateDiacritic(globalCharIDX, diacriticChar) {
   return correctDiacritic === diacriticChar;
 }
 
-function cursor(globalCharIDX) {
+function cursor(index, max_limit) {
   clearSelections();
+  const newIndex = normalizeIndex(index, max_limit);
   const charElement = document.querySelector(
-    `[data-global-char-idx="${globalCharIDX}"]`
+    `[data-global-char-idx="${newIndex}"]`
   );
-  charElement.classList.add("selected-char", "blinking-cursor");
+  try {
+    charElement.classList.add("selected-char", "blinking-cursor");
+  } catch (error) {
+    console.error("Error adding cursor:", error);
+  }
 }
 // ============================
 // Helper Functions

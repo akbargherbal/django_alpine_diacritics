@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Component Loader</title>
+    
+    <!-- React Dependencies -->
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX/TSX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Load your component - DO NOT use export/import syntax in your component file -->
+    <script type="text/babel" data-presets="react" data-type="module">
+        // Your component will be available as a global variable
+        window.PlayfulHomepage = () => {
+            return (
+                // Your JSX here - copy from your TSX file
+                <div>Hello World</div>
+            );
+        };
+    </script>
+    
+    <!-- Mount your component -->
+    <script type="text/babel">
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(window.PlayfulHomepage));
+    </script>
+</body>
+</html>

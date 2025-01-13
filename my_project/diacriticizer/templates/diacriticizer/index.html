@@ -1,5 +1,9 @@
-{% extends 'base.html' %} {% block page_title %} Page Title Comes Here
-{%endblock page_title %} {% block content %}
+{% extends 'base.html' %}
+{% block page_title %}
+Page Title Comes Here
+{%endblock page_title %}
+
+{% block content %}
 <main dir="rtl">
   <div
     class="container"
@@ -10,6 +14,7 @@
     <div
       data-tokens-count="{{ tokens_count }}"
       data-dia-count="{{ total_diacritics }}"
+      data-mode = "{{ mode }}"
       class="verse"
     >
       {{ verse | safe}}

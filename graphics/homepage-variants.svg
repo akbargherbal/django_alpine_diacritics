@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1800">
+    <!-- Background -->
+    <rect width="1200" height="1800" fill="#F8F9FA"/>
+    <text x="600" y="40" font-family="Arial" font-size="24" text-anchor="middle" fill="#212529">Homepage Design Variants</text>
+
+    <!-- Variant 1: Split Screen -->
+    <g transform="translate(0,60)">
+        <rect width="1200" height="500" fill="#FFFFFF" stroke="#DEE2E6"/>
+        <text x="600" y="30" font-family="Arial" font-size="20" text-anchor="middle" fill="#212529">Variant 1: Split Screen Design</text>
+        
+        <!-- Left Side: Diacritization -->
+        <g transform="translate(50,50)">
+            <rect width="500" height="400" fill="#FEF2F2" rx="8"/>
+            <circle cx="250" cy="100" r="40" fill="#FEE2E2"/>
+            <path d="M230,100 Q250,80 270,100 Q250,120 230,100" stroke="#EF4444" stroke-width="3" fill="none"/>
+            <text x="250" y="180" font-family="Arial" font-size="24" text-anchor="middle">Diacritization Mode</text>
+            <!-- File Upload Area -->
+            <rect x="100" y="200" width="300" height="100" fill="#FFFFFF" stroke="#EF4444" stroke-dasharray="4"/>
+            <text x="250" y="250" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">Drop Arabic text file (.txt)</text>
+            <rect x="150" y="320" width="200" height="40" rx="20" fill="#EF4444"/>
+            <text x="250" y="345" font-family="Arial" font-size="16" fill="#FFFFFF" text-anchor="middle">Start Diacritizing</text>
+        </g>
+
+        <!-- Right Side: Training -->
+        <g transform="translate(650,50)">
+            <rect width="500" height="400" fill="#EFF6FF" rx="8"/>
+            <circle cx="250" cy="100" r="40" fill="#DBEAFE"/>
+            <path d="M230,100 L270,100 M250,80 L250,120" stroke="#3B82F6" stroke-width="3"/>
+            <text x="250" y="180" font-family="Arial" font-size="24" text-anchor="middle">Training Mode</text>
+            <!-- Source Selection -->
+            <rect x="100" y="200" width="300" height="100" fill="#FFFFFF" stroke="#3B82F6"/>
+            <text x="250" y="240" font-family="Arial" font-size="14" text-anchor="middle">Select Practice Source:</text>
+            <rect x="150" y="260" width="200" height="30" rx="4" fill="#F8F9FA"/>
+            <text x="170" y="280" font-family="Arial" font-size="14">Quran Verses ▼</text>
+            <rect x="150" y="320" width="200" height="40" rx="20" fill="#3B82F6"/>
+            <text x="250" y="345" font-family="Arial" font-size="16" fill="#FFFFFF" text-anchor="middle">Start Training</text>
+        </g>
+    </g>
+
+    <!-- Variant 2: Card-Based -->
+    <g transform="translate(0,620)">
+        <rect width="1200" height="500" fill="#FFFFFF" stroke="#DEE2E6"/>
+        <text x="600" y="30" font-family="Arial" font-size="20" text-anchor="middle" fill="#212529">Variant 2: Card-Based Design</text>
+        
+        <!-- Header -->
+        <text x="600" y="80" font-family="Arial" font-size="32" text-anchor="middle">Arabic Text Diacritization</text>
+        <text x="600" y="110" font-family="Arial" font-size="16" text-anchor="middle" fill="#666">Choose your mode to begin</text>
+
+        <!-- Mode Cards -->
+        <g transform="translate(200,140)">
+            <!-- Diacritization Card -->
+            <g>
+                <rect width="350" height="300" rx="8" fill="#FFFFFF" stroke="#DEE2E6" stroke-width="2"/>
+                <circle cx="175" cy="80" r="40" fill="#FEE2E2"/>
+                <path d="M155,80 Q175,60 195,80 Q175,100 155,80" stroke="#EF4444" stroke-width="3" fill="none"/>
+                <text x="175" y="150" font-family="Arial" font-size="20" text-anchor="middle">Diacritization Mode</text>
+                <rect x="50" y="170" width="250" height="70" rx="4" fill="#F8F9FA" stroke="#DEE2E6"/>
+                <text x="175" y="205" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">Upload .txt file</text>
+                <rect x="75" y="250" width="200" height="35" rx="17.5" fill="#EF4444"/>
+                <text x="175" y="272" font-family="Arial" font-size="14" fill="#FFFFFF" text-anchor="middle">Start Diacritizing</text>
+            </g>
+
+            <!-- Training Card -->
+            <g transform="translate(450,0)">
+                <rect width="350" height="300" rx="8" fill="#FFFFFF" stroke="#DEE2E6" stroke-width="2"/>
+                <circle cx="175" cy="80" r="40" fill="#DBEAFE"/>
+                <path d="M155,80 L195,80 M175,60 L175,100" stroke="#3B82F6" stroke-width="3"/>
+                <text x="175" y="150" font-family="Arial" font-size="20" text-anchor="middle">Training Mode</text>
+                <rect x="50" y="170" width="250" height="70" rx="4" fill="#F8F9FA" stroke="#DEE2E6"/>
+                <text x="175" y="195" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">Practice with curated texts</text>
+                <text x="175" y="215" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">Get instant feedback</text>
+                <rect x="75" y="250" width="200" height="35" rx="17.5" fill="#3B82F6"/>
+                <text x="175" y="272" font-family="Arial" font-size="14" fill="#FFFFFF" text-anchor="middle">Start Training</text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Variant 3: Minimalist -->
+    <g transform="translate(0,1180)">
+        <rect width="1200" height="500" fill="#FFFFFF" stroke="#DEE2E6"/>
+        <text x="600" y="30" font-family="Arial" font-size="20" text-anchor="middle" fill="#212529">Variant 3: Minimalist Design</text>
+        
+        <!-- Center Content -->
+        <text x="600" y="100" font-family="Arial" font-size="36" text-anchor="middle">تَشْكِيل</text>
+        <line x1="400" y1="130" x2="800" y2="130" stroke="#DEE2E6"/>
+        
+        <!-- Mode Options -->
+        <g transform="translate(300,180)">
+            <!-- Diacritization Option -->
+            <rect width="600" height="100" rx="8" fill="#FFFFFF" stroke="#EF4444" stroke-width="2"/>
+            <circle cx="60" cy="50" r="30" fill="#FEE2E2"/>
+            <path d="M45,50 Q60,35 75,50 Q60,65 45,50" stroke="#EF4444" stroke-width="2" fill="none"/>
+            <text x="120" y="40" font-family="Arial" font-size="20">Diacritize Text</text>
+            <text x="120" y="65" font-family="Arial" font-size="14" fill="#666">Upload Arabic text file (.txt)</text>
+            <rect x="400" y="30" width="150" height="40" rx="20" fill="#EF4444"/>
+            <text x="475" y="55" font-family="Arial" font-size="14" fill="#FFFFFF" text-anchor="middle">Start</text>
+
+            <!-- Training Option -->
+            <g transform="translate(0,120)">
+                <rect width="600" height="100" rx="8" fill="#FFFFFF" stroke="#3B82F6" stroke-width="2"/>
+                <circle cx="60" cy="50" r="30" fill="#DBEAFE"/>
+                <path d="M45,50 L75,50 M60,35 L60,65" stroke="#3B82F6" stroke-width="2"/>
+                <text x="120" y="40" font-family="Arial" font-size="20">Practice Mode</text>
+                <text x="120" y="65" font-family="Arial" font-size="14" fill="#666">Learn with guided exercises</text>
+                <rect x="400" y="30" width="150" height="40" rx="20" fill="#3B82F6"/>
+                <text x="475" y="55" font-family="Arial" font-size="14" fill="#FFFFFF" text-anchor="middle">Start</text>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,23 @@
+graph TD
+    Home["/"] --> About["/about<br/>About the Project"]
+    Home --> Help["/help<br/>User Guide & Keyboard Shortcuts"]
+    Home --> Contact["/contact<br/>Contact Information"]
+    
+    Home --> Training["/training<br/>Training Mode Interface"]
+    Home --> Diacritization["/diacritization<br/>Diacritization Mode Interface"]
+    
+    subgraph User Account
+        Login["/login<br/>User Login"]
+        Register["/register<br/>User Registration"]
+        Profile["/profile<br/>User Profile & Settings"]
+    end
+    
+    Home --> Login
+    Login --> Register
+    Login --> Profile
+    
+    subgraph Admin Area
+        Admin["/admin<br/>Django Admin Interface"]
+    end
+    
+    Home --> Admin

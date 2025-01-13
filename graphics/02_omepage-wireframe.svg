@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <!-- Background -->
+    <rect width="800" height="600" fill="#F8F9FA"/>
+    
+    <!-- Header -->
+    <g id="header">
+        <rect width="800" height="60" fill="#FFFFFF" stroke="#E9ECEF"/>
+        <text x="40" y="38" font-family="Arial" font-size="24" fill="#495057">تَشْكِيل</text>
+        <!-- Navigation Items -->
+        <g id="nav-items" fill="#6C757D">
+            <text x="680" y="38" font-family="Arial" font-size="16">Guide</text>
+            <text x="740" y="38" font-family="Arial" font-size="16">About</text>
+        </g>
+    </g>
+
+    <!-- Main Content -->
+    <g id="main-content" transform="translate(0,100)">
+        <!-- Title -->
+        <text x="400" y="40" font-family="Arial" font-size="32" text-anchor="middle" fill="#212529">
+            Arabic Text Diacritization
+        </text>
+        <text x="400" y="80" font-family="Arial" font-size="18" text-anchor="middle" fill="#6C757D">
+            Add diacritical marks (تشكيل) to Arabic text
+        </text>
+
+        <!-- Mode Cards -->
+        <g id="mode-cards" transform="translate(0,120)">
+            <!-- Training Mode Card -->
+            <g id="training-card" transform="translate(100,0)">
+                <rect width="250" height="300" rx="8" fill="#FFFFFF" stroke="#DEE2E6" stroke-width="1"/>
+                <!-- Icon -->
+                <circle cx="125" cy="80" r="40" fill="#E9ECEF"/>
+                <path d="M105,80 L145,80 M125,60 L125,100" stroke="#6C757D" stroke-width="4" stroke-linecap="round"/>
+                <!-- Content -->
+                <text x="125" y="160" font-family="Arial" font-size="24" text-anchor="middle" fill="#212529">Training Mode</text>
+                <text x="125" y="190" font-family="Arial" font-size="16" text-anchor="middle" fill="#6C757D">Practice adding diacritics</text>
+                <text x="125" y="210" font-family="Arial" font-size="16" text-anchor="middle" fill="#6C757D">with instant feedback</text>
+                <!-- Button -->
+                <rect x="50" y="240" width="150" height="40" rx="4" fill="#0D6EFD"/>
+                <text x="125" y="265" font-family="Arial" font-size="16" text-anchor="middle" fill="#FFFFFF">Start Training</text>
+            </g>
+
+            <!-- Diacritization Mode Card -->
+            <g id="diacritization-card" transform="translate(450,0)">
+                <rect width="250" height="300" rx="8" fill="#FFFFFF" stroke="#DEE2E6" stroke-width="1"/>
+                <!-- Icon -->
+                <circle cx="125" cy="80" r="40" fill="#E9ECEF"/>
+                <path d="M105,80 Q125,60 145,80 Q125,100 105,80" fill="none" stroke="#6C757D" stroke-width="4"/>
+                <!-- Content -->
+                <text x="125" y="160" font-family="Arial" font-size="24" text-anchor="middle" fill="#212529">Diacritization Mode</text>
+                <text x="125" y="190" font-family="Arial" font-size="16" text-anchor="middle" fill="#6C757D">Add diacritics to</text>
+                <text x="125" y="210" font-family="Arial" font-size="16" text-anchor="middle" fill="#6C757D">your Arabic text</text>
+                <!-- Button -->
+                <rect x="50" y="240" width="150" height="40" rx="4" fill="#0D6EFD"/>
+                <text x="125" y="265" font-family="Arial" font-size="16" text-anchor="middle" fill="#FFFFFF">Start Diacritizing</text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Footer -->
+    <g id="footer" transform="translate(0,550)">
+        <line x1="0" y1="0" x2="800" y2="0" stroke="#DEE2E6" stroke-width="1"/>
+        <text x="400" y="35" font-family="Arial" font-size="14" text-anchor="middle" fill="#6C757D">
+            Learn more about keyboard shortcuts in the guide
+        </text>
+    </g>
+</svg>

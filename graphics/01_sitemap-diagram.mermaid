@@ -1,0 +1,30 @@
+graph TD
+    Home["/"] --> Training["/training<br/>Interactive Training Mode"]
+    Home --> Diacritization["/diacritize<br/>Text Diacritization Mode"]
+    
+    subgraph Core Features
+        Training --> TrainingExercise["/training/exercise<br/>Practice Exercise"]
+        Training --> TrainingProgress["/training/progress<br/>Learning Progress"]
+        
+        Diacritization --> NewText["/diacritize/new<br/>New Text Entry"]
+        Diacritization --> History["/diacritize/history<br/>Recent Texts"]
+    end
+    
+    subgraph Support Pages
+        Home --> Guide["/guide<br/>Keyboard Shortcuts & Help"]
+        Home --> About["/about<br/>Project Info"]
+        Guide --> Shortcuts["/guide/shortcuts<br/>Keyboard Controls"]
+        Guide --> Tutorial["/guide/tutorial<br/>Basic Tutorial"]
+    end
+    
+    style Home fill:#f9f,stroke:#333,stroke-width:2px
+    style Training fill:#bbf,stroke:#333
+    style Diacritization fill:#bbf,stroke:#333
+    style Guide fill:#ddd,stroke:#333
+    style About fill:#ddd,stroke:#333
+
+    classDef feature fill:#e1e8ff,stroke:#333
+    class TrainingExercise,TrainingProgress,NewText,History feature
+    
+    classDef support fill:#f5f5f5,stroke:#333
+    class Shortcuts,Tutorial support

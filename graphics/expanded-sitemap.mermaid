@@ -1,0 +1,42 @@
+graph TD
+    Home["Home (Card Dashboard)"] --> Core["Core Features"]
+    Home --> Support["Support Features"]
+    
+    %% Core Features Branch
+    Core --> Diacritization["Diacritization Mode<br/>/diacritize"]
+    Core --> Training["Training Mode<br/>/train"]
+    
+    %% Diacritization Features
+    Diacritization --> TextUpload["/diacritize/upload<br/>Text File Upload"]
+    Diacritization --> TextEditor["/diacritize/editor<br/>Diacritization Editor"]
+    TextEditor --> SavedTexts["/diacritize/saved<br/>Saved Texts"]
+    TextEditor --> ExportText["/diacritize/export<br/>Export Options"]
+    
+    %% Training Features
+    Training --> Exercises["/train/exercises<br/>Exercise Selection"]
+    Training --> Progress["/train/progress<br/>Learning Progress"]
+    Exercises --> QuranTexts["/train/quran<br/>Quran Exercises"]
+    Exercises --> ClassicalTexts["/train/classical<br/>Classical Arabic"]
+    Progress --> Statistics["/train/stats<br/>Performance Stats"]
+    Progress --> Achievements["/train/achievements<br/>User Achievements"]
+    
+    %% Support Features Branch
+    Support --> Guide["/guide<br/>User Guide"]
+    Support --> About["/about<br/>About Project"]
+    Support --> Keyboard["/guide/shortcuts<br/>Keyboard Shortcuts"]
+    
+    %% Future Expansion Slots
+    Home --> Future["Future Features<br/>(Expansion Slots)"]
+    Future --> Community["Community Features<br/>(Planned)"]
+    Future --> Advanced["Advanced Tools<br/>(Planned)"]
+    
+    %% Styling
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px
+    classDef core fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    classDef support fill:#f5f5f5,stroke:#616161
+    classDef future fill:#fff3e0,stroke:#ef6c00,stroke-dasharray: 5 5
+    
+    class Home,Core,Support default
+    class Diacritization,Training,TextEditor,Exercises core
+    class Guide,About,Keyboard support
+    class Future,Community,Advanced future
