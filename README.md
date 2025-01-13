@@ -98,4 +98,6 @@ When suggesting solutions:
 - Complex state management libraries
 - Client-side routing or SPA architectures
 
-This project demonstrates how to build interactive web applications while maintaining a backend-centric approach, using a hybrid data strategy to balance performance and maintainability.
+---
+
+**Note:** This is a learning project and not intended for production use. The goal is to incrementally add features as I progress in my educational journey, which primarily focuses on learning Django, AlpineJS, and HTMX. This iterative approach allows me to explore best practices and solidify my understanding of these tools in a practical setting.
