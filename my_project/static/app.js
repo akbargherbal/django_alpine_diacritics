@@ -27,7 +27,7 @@ document.addEventListener("alpine:init", () => {
 
     init() {
       // Step 1: Create an object that packages all our functions
-
+      console.log("Alpine initialized");
       const wd_dict = JSON.parse(
         document.getElementById("wd_dict").textContent
       );

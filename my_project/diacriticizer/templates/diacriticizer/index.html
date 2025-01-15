@@ -1,33 +1,70 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block custom_stylesheets %}
+<link rel="stylesheet" href="{% static 'diacriticize.css' %}" />
+{% endblock %}
+
 {% block page_title %}
-Page Title Comes Here
-{%endblock page_title %}
+Arabic Text Diacritization
+{% endblock %}
 
 {% block content %}
 <main dir="rtl">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1 class="logo">تَشْكِيل</h1>
+    </div>
+    <div class="nav-links">
+      <a href="{% url 'diacriticizer:home' %}" class="nav-link">Home</a>
+      <a href="/guide" class="nav-link">Guide</a>
+      <a href="/about" class="nav-link">About</a>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
   <div
     class="container"
     x-data="sentHook"
     tabindex="0"
-    :class="{'edit-mode': isEditMode, 'autopilot-mode' : isAutoPilot}"
+    :class="{'edit-mode': isEditMode, 'autopilot-mode': isAutoPilot}"
   >
+    <!-- Text Area -->
     <div
+      class="verse"
       data-tokens-count="{{ tokens_count }}"
       data-dia-count="{{ total_diacritics }}"
-      data-mode = "{{ mode }}"
-      class="verse"
+      data-mode="{{ mode }}"
     >
-      {{ verse | safe}}
+      {{ verse|safe }}
     </div>
-    <div class="stats">
-      <p><span>الحركة: </span><span x-text="currentChar"></span></p>
+
+    <!-- Mode and Controls -->
+    <div class="control-panel">
+      <div class="mode-indicator">
+        <span>Current Mode:</span>
+        <span
+          class="mode-display"
+          x-text="isEditMode ? 'Edit Mode' : (isAutoPilot ? 'Auto-pilot' : 'Normal')"
+        ></span>
+      </div>
+      <button class="next-sentence-btn">Next Sentence</button>
+    </div>
+
+    <!-- Stats Display -->
+    <div class="stats-panel">
+      <div class="diacritic-display">
+        <span>الحركة: </span>
+        <span x-text="currentChar"></span>
+      </div>
     </div>
   </div>
 </main>
+
+<!-- Data for Alpine.js -->
 {{ wd_dict|json_script:"wd_dict" }}
 {{ char_dict_global|json_script:"char_dict_global" }}
 {{ char_dict_local|json_script:"char_dict_local" }}
-
-
 
 {% endblock content %}
