@@ -25,39 +25,60 @@ document.addEventListener("alpine:init", () => {
     currentChar: "",
     mode: "",
 
-    init() {
-      // Step 1: Create an object that packages all our functions
-      console.log("Alpine initialized");
-      const wd_dict = JSON.parse(
+    // New method to update dictionaries and state
+    updateDictionariesAndState() {
+      // Update dictionaries
+      window.wd_dict = JSON.parse(
         document.getElementById("wd_dict").textContent
       );
-      const char_dict_global = JSON.parse(
+      window.char_dict_global = JSON.parse(
         document.getElementById("char_dict_global").textContent
       );
-
-      const char_dict_local = JSON.parse(
+      window.char_dict_local = JSON.parse(
         document.getElementById("char_dict_local").textContent
       );
 
+      // Update component state
       this.tokensCount = parseInt(
         document.querySelector(".verse").getAttribute("data-tokens-count")
       );
-
       this.totalDiacritics = parseInt(
         document.querySelector(".verse").getAttribute("data-dia-count")
       );
-
       this.mode = document.querySelector(".verse").getAttribute("data-mode");
 
-      // remove later;
-      console.log(wd_dict);
-      console.log(char_dict_global);
-      console.log(char_dict_local);
-      console.log(`Mode: ${this.mode}`)
-      window.wd_dict = wd_dict;
-      window.char_dict_global = char_dict_global;
-      window.char_dict_local = char_dict_local;
-      // remove later
+      // Reset selection state
+      this.wordIsSelected = false;
+      this.wordIndex = -1;
+      this.charIndex = -1;
+      this.globalDiaIndex = 0;
+      this.isEditMode = false;
+      this.isAutoPilot = false;
+
+      // Clear any visual selections
+      clearSelections();
+
+      // Debug logging
+      console.log("State updated:", {
+        tokensCount: this.tokensCount,
+        totalDiacritics: this.totalDiacritics,
+        mode: this.mode
+      });
+    },
+
+    init() {
+      console.log("Alpine initialized");
+      
+      // Initial setup
+      this.updateDictionariesAndState();
+
+      // Listen for HTMX updates
+      document.body.addEventListener('htmx:afterSettle', () => {
+        console.log("HTMX update detected");
+        this.updateDictionariesAndState();
+      });
+
+      // Set up hotkeys
       const functionPackage = {
         wordNavigator: () => this.wordNavigator(),
         charNavigator: () => this.charNavigator(),
@@ -66,9 +87,9 @@ document.addEventListener("alpine:init", () => {
         toggleAutoPilot: () => this.toggleAutoPilot(),
       };
 
-      // Step 2: Pass that package to setupHotkeys
       setupHotkeys(functionPackage);
 
+      // Watch for state changes
       this.$watch("wordIndex", (value, oldValue) => {
         console.table({
           wordIndex: this.wordIndex,

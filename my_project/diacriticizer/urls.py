@@ -10,4 +10,5 @@ urlpatterns = [
     ),  # this makes the homepage reachable by `/` route.
     path("training/", views.training, name="training"),
     path("index/", views.index, name="index"),
+    path("next-sentence/", views.get_next_verse, name="next-sentence"),
 ]
