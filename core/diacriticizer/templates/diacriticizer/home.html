@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'diacriticizer/base.html' %}
 {% load static %}
 
 {% block custom_stylesheets %}
-<link rel="stylesheet" href="{% static 'homepage.css' %}"/>
+<link rel="stylesheet" href="{% static 'diacriticizer/css/homepage.css' %}"/>
 {% endblock %}
 
 {% block page_title %}
@@ -38,7 +38,7 @@ Choose Mode
     <div class="card">
       <div class="card-icon training-icon">
         <img
-          src="{% static '/icons/education.svg' %}"
+          src="{% static 'diacriticizer/images/education.svg' %}"
           alt="Training mode icon"
         />
       </div>
@@ -53,7 +53,7 @@ Choose Mode
     <div class="card">
       <div class="card-icon diacritization-icon">
         <img
-          src="{% static '/icons/edit.svg' %}"
+          src="{% static 'diacriticizer/images/edit.svg' %}"
           alt="Diacritization mode icon"
         />
       </div>

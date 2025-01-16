@@ -1,0 +1,45 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block custom_stylesheets %}
+<link rel="stylesheet" href="{% static 'project_manager/css/project_manager.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div class="pm-container">
+    <header class="pm-header">
+        <h1 class="pm-title">My Projects</h1>
+        <a href="{% url 'project_manager:project_create' %}" class="pm-btn pm-btn-primary">
+            Create New Project
+        </a>
+    </header>
+    
+    <div class="pm-grid">
+        {% for project in projects %}
+            <article class="pm-card" data-project-id="{{ project.pk }}">
+                <h2 class="pm-card-title">{{ project.name }}</h2>
+                <div class="pm-card-meta">
+                    <p>Type: {{ project.get_project_type_display }}</p>
+                    <p>Created: {{ project.created_at|date:"M d, Y" }}</p>
+                    {% with doc_count=project.documents.count %}
+                        <p>{{ doc_count }} Document{{ doc_count|pluralize }}</p>
+                    {% endwith %}
+                </div>
+                <a href="{% url 'project_manager:project_detail' project.pk %}" 
+                   class="pm-btn pm-btn-secondary">
+                    View Project
+                </a>
+            </article>
+        {% empty %}
+            <div class="pm-card" style="grid-column: 1/-1; text-align: center;">
+                <h2 class="pm-card-title">Welcome!</h2>
+                <p class="mb-4">No projects yet. Start by creating your first project.</p>
+                <a href="{% url 'project_manager:project_create' %}" 
+                   class="pm-btn pm-btn-primary">
+                    Create First Project
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

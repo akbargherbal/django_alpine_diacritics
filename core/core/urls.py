@@ -1,5 +1,5 @@
 """
-URL configuration for my_project project.
+URL configuration for core project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -16,11 +16,11 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from django.urls import include
 
 urlpatterns = [
-    path("", include("diacriticizer.urls")),  # This line is essential!
-    path("diacriticizer/", include("diacriticizer.urls")),
     path("admin/", admin.site.urls),
-    path("__reload__/", include("django_browser_reload.urls")),
+    path("", include("diacriticizer.urls")),
+    path("project_manager/", include("project_manager.urls")),
 ]
