@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "diacriticizer",
     "project_manager",
     "django_browser_reload",
+    "pages",
 ]
 
 MIDDLEWARE = [

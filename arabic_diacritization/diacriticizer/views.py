@@ -13,10 +13,6 @@ VERSES = [
 ]
 
 
-def home(request):
-    return render(request, "diacriticizer/home.html")
-
-
 def index(request):
     """Render the main diacriticizer page with processed verse data."""
     mode = request.GET.get("mode", "dicr")
@@ -111,4 +107,4 @@ def get_next_verse(request):
 
 def training(request):
     """Redirect to index page with train mode."""
-    return redirect("/index/?mode=train")
+    return redirect("/diacriticizer/?mode=train")

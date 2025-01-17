@@ -1,0 +1,107 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}About - Arabic Text Diacritization{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-section h2 {
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+
+    .feature-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .feature-item {
+        padding: 1.5rem;
+        background: #f8fafc;
+        border-radius: 8px;
+    }
+
+    .feature-item h3 {
+        color: var(--primary-color);
+        margin-bottom: 0.75rem;
+    }
+
+    .arabic-example {
+        font-family: 'Amiri', serif;
+        font-size: 1.5rem;
+        direction: rtl;
+        text-align: right;
+        margin: 1rem 0;
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-section">
+    <h1>About تَشْكِيل</h1>
+    <p>An interactive platform designed to simplify the process of adding diacritical marks to Arabic text.</p>
+</div>
+
+<div class="about-section">
+    <h2>What is Arabic Diacritization?</h2>
+    <p>Arabic diacritization (تَشْكِيل) involves adding vowel marks and other phonetic guides to Arabic text. These marks are crucial for:</p>
+    <ul>
+        <li>Proper pronunciation</li>
+        <li>Disambiguation of word meanings</li>
+        <li>Correct reading for learners</li>
+    </ul>
+    
+    <div class="arabic-example">
+        كتب → كَتَبَ (wrote) / كُتُب (books)
+    </div>
+</div>
+
+<div class="about-section">
+    <h2>Key Features</h2>
+    <div class="feature-list">
+        <div class="feature-item">
+            <h3>Training Mode</h3>
+            <p>Practice diacritization with immediate feedback, perfect for learning and improving accuracy.</p>
+        </div>
+        
+        <div class="feature-item">
+            <h3>Project Management</h3>
+            <p>Organize your diacritization work into projects and track progress efficiently.</p>
+        </div>
+        
+        <div class="feature-item">
+            <h3>Keyboard Shortcuts</h3>
+            <p>Intuitive keyboard controls for fast and efficient diacritization.</p>
+        </div>
+        
+        <div class="feature-item">
+            <h3>Auto-pilot Mode</h3>
+            <p>Streamlined workflow with automatic position advancement.</p>
+        </div>
+    </div>
+</div>
+
+<div class="about-section">
+    <h2>How to Get Started</h2>
+    <ol>
+        <li>Create a new project in the Projects section</li>
+        <li>Upload your Arabic text documents</li>
+        <li>Choose between Training or Diacritization mode</li>
+        <li>Use our keyboard shortcuts for efficient work</li>
+    </ol>
+    <p>Check out our <a href="{% url 'pages:guide' %}">comprehensive guide</a> to learn more about using the platform.</p>
+</div>
+{% endblock %}
