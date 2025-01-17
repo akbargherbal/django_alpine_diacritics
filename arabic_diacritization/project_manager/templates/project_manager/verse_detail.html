@@ -1,0 +1,48 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+            <h1 class="h2 mb-2">Verse {{ verse.position }}</h1>
+            <p class="text-muted mb-0">
+                Project: {{ verse.document.project.name }} • 
+                Document: {{ verse.document.name }}
+            </p>
+        </div>
+        <a href="{% url 'project_manager:document_detail' verse.document.pk %}" 
+           class="btn btn-outline-primary">
+            Back to Document
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="verse-content mb-4">
+                {{ verse.content }}
+            </div>
+            
+            <div class="text-center py-3 bg-light rounded">
+                <h2 class="h4 mb-3">Verse Status</h2>
+                <div class="d-flex flex-column align-items-center">
+                    <div class="status-badge status-{{ verse.status|lower }} mb-2">
+                        {{ verse.get_status_display }}
+                    </div>
+                    <p class="text-muted small mb-0">
+                        {% if verse.status == 'NEW' %}
+                            This verse has not been processed yet
+                        {% elif verse.status == 'IN_PROGRESS' %}
+                            This verse is currently being worked on
+                        {% elif verse.status == 'COMPLETED' %}
+                            This verse has been completed
+                        {% else %}
+                            This verse has been reviewed
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
