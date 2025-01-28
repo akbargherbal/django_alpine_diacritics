@@ -1,0 +1,54 @@
+<div class="bg-white rounded-lg border border-gray-200 mb-4 last:mb-0">
+  <div class="p-4">
+    <div class="flex items-center justify-between flex-wrap gap-4">
+      <div class="flex-grow">
+        <h3 class="text-lg font-medium text-gray-900 mb-2">
+          {{ document.name }}
+        </h3>
+        <p class="text-sm text-gray-500 mb-3">
+          Uploaded: {{ document.uploaded_at|date:"M d, Y" }}
+        </p>
+        <div class="flex flex-wrap gap-4 text-sm">
+          <div class="text-gray-600" title="Total Verses">
+            <span class="font-semibold">{{ document.total_verses }}</span>
+            verses
+          </div>
+          {% if document.new_verses %}
+          <div class="text-blue-600" title="New Verses">
+            <span class="font-semibold">{{ document.new_verses }}</span> new
+          </div>
+          {% endif %} {% if document.in_progress_verses %}
+          <div class="text-yellow-600" title="In Progress">
+            <span class="font-semibold">{{ document.in_progress_verses }}</span>
+            in progress
+          </div>
+          {% endif %} {% if document.completed_verses %}
+          <div class="text-green-600" title="Completed">
+            <span class="font-semibold">{{ document.completed_verses }}</span>
+            completed
+          </div>
+          {% endif %} {% if document.reviewed_verses %}
+          <div class="text-purple-600" title="Reviewed">
+            <span class="font-semibold">{{ document.reviewed_verses }}</span>
+            reviewed
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex-shrink-0 space-y-2">
+        <a
+          href="{% url 'project_manager:document_detail' document.pk %}"
+          class="block w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Document Detail
+        </a>
+        <a
+          href="{% url 'diacriticizer:process' %}?doc_id={{ document.pk }}&project_id={{document.project.id}}&project_type={{ document.project.project_type }}&doc_name={{ document.name|urlencode }}"
+          class="block w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        >
+          Diacriticize Document
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

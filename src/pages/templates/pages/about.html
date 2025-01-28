@@ -1,0 +1,61 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}About - Arabic Text Diacritization{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-xl p-8 shadow-md mb-8">
+    <h1 class="text-4xl font-medium mb-4">About تَشْكِيل</h1>
+    <p class="text-gray-600">An interactive platform designed to simplify the process of adding diacritical marks to Arabic text.</p>
+</div>
+
+<div class="bg-white rounded-xl p-8 shadow-md mb-8">
+    <h2 class="text-3xl font-medium mb-4">What is Arabic Diacritization?</h2>
+    <p class="text-gray-600 mb-4">Arabic diacritization (تَشْكِيل) involves adding vowel marks and other phonetic guides to Arabic text. These marks are crucial for:</p>
+    <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
+        <li>Proper pronunciation</li>
+        <li>Disambiguation of word meanings</li>
+        <li>Correct reading for learners</li>
+    </ul>
+    
+    <div class="font-arabic text-2xl rtl text-right bg-gray-50 p-4 rounded-lg">
+        كتب → كَتَبَ (wrote) / كُتُب (books)
+    </div>
+</div>
+
+<div class="bg-white rounded-xl p-8 shadow-md mb-8">
+    <h2 class="text-3xl font-medium mb-6">Key Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-blue-500 text-xl font-medium mb-3">Training Mode</h3>
+            <p class="text-gray-600">Practice diacritization with immediate feedback, perfect for learning and improving accuracy.</p>
+        </div>
+        
+        <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-blue-500 text-xl font-medium mb-3">Project Management</h3>
+            <p class="text-gray-600">Organize your diacritization work into projects and track progress efficiently.</p>
+        </div>
+        
+        <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-blue-500 text-xl font-medium mb-3">Keyboard Shortcuts</h3>
+            <p class="text-gray-600">Intuitive keyboard controls for fast and efficient diacritization.</p>
+        </div>
+        
+        <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-blue-500 text-xl font-medium mb-3">Auto-pilot Mode</h3>
+            <p class="text-gray-600">Streamlined workflow with automatic position advancement.</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl p-8 shadow-md">
+    <h2 class="text-3xl font-medium mb-4">How to Get Started</h2>
+    <ol class="list-decimal list-inside text-gray-600 space-y-3 mb-6">
+        <li>Create a new project in the Projects section</li>
+        <li>Upload your Arabic text documents</li>
+        <li>Choose between Training or Diacritization mode</li>
+        <li>Use our keyboard shortcuts for efficient work</li>
+    </ol>
+    <p class="text-gray-600">Check out our <a href="{% url 'pages:guide' %}" class="text-blue-500 hover:underline">comprehensive guide</a> to learn more about using the platform.</p>
+</div>
+{% endblock %}

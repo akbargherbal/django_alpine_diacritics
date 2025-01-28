@@ -1,0 +1,22 @@
+.selected-word {
+  background-color: #fff5f5;
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.selected-char {
+  color: #e53e3e;
+}
+
+.blinking-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    background-color: rgba(66, 153, 225, 0.2);
+  }
+}
+.dia {
+  color: red !important;
+}

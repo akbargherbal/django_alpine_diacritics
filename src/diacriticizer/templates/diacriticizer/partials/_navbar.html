@@ -1,0 +1,27 @@
+{# templates/shared/_navbar.html #}
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+    <nav class="flex items-center justify-between max-w-6xl px-8 py-4 mx-auto">
+        <h1 class="text-4xl text-gray-800 logo font-arabic">
+            <a href="{% url 'pages:home' %}">تَشْكِيل</a>
+        </h1>
+        
+        <div class="flex gap-8">
+            <a href="{% url 'pages:home' %}" 
+               class="text-gray-600 hover:text-gray-900 text-lg transition-colors {% if request.resolver_match.url_name == 'home' %}font-bold text-gray-900{% endif %}">
+               Home
+            </a>
+            <a href="{% url 'pages:guide' %}" 
+               class="text-gray-600 hover:text-gray-900 text-lg transition-colors {% if request.resolver_match.url_name == 'guide' %}font-bold text-gray-900{% endif %}">
+               Guide
+            </a>
+            <a href="{% url 'pages:about' %}" 
+               class="text-gray-600 hover:text-gray-900 text-lg transition-colors {% if request.resolver_match.url_name == 'about' %}font-bold text-gray-900{% endif %}">
+               About
+            </a>
+            <a href="{% url 'project_manager:project_list' %}"
+               class="text-gray-600 hover:text-gray-900 text-lg transition-colors {% if request.resolver_match.app_name == 'project_manager' %}font-bold text-gray-900{% endif %}">
+               Projects
+            </a>
+        </div>
+    </nav>
+</header>

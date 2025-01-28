@@ -1,0 +1,130 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}Guide - Arabic Text Diacritization{% endblock %}
+
+{% block content %}
+<div class="p-8 mb-8 bg-white shadow-md rounded-xl">
+    <h1 class="mb-4 text-4xl font-medium">Guide to Arabic Text Diacritization</h1>
+    <p class="text-gray-600">Learn how to use our platform effectively for adding diacritical marks to Arabic text.</p>
+</div>
+
+<div class="p-8 mb-8 bg-white shadow-md rounded-xl">
+    <h2 class="mb-6 text-3xl font-medium">Navigation Modes</h2>
+    <div class="space-y-8">
+        <div>
+            <h3 class="mb-4 text-2xl font-medium">1. Manual Mode</h3>
+            <ul class="space-y-3 text-gray-600 list-disc list-inside">
+                <li>Press <kbd class="px-3 py-1 mx-1 font-mono bg-gray-100 rounded">Enter</kbd> to enter edit mode</li>
+                <li>Use <kbd class="px-3 py-1 mx-1 font-mono bg-gray-100 rounded">Ctrl + Space</kbd> for word navigation</li>
+                <li>Use <kbd class="px-3 py-1 mx-1 font-mono bg-gray-100 rounded">Space</kbd> for character navigation</li>
+                <li>Press <kbd class="px-3 py-1 mx-1 font-mono bg-gray-100 rounded">Escape</kbd> to exit edit mode</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="mb-4 text-2xl font-medium">2. Auto-pilot Mode</h3>
+            <ul class="space-y-3 text-gray-600 list-disc list-inside">
+                <li>Press <kbd class="px-3 py-1 mx-1 font-mono bg-gray-100 rounded">Ctrl + A</kbd> to enter auto-pilot mode</li>
+                <li>System automatically moves to next position after each diacritic</li>
+                <li>Press <kbd class="px-3 py-1 mx-1 font-mono bg-gray-100 rounded">Escape</kbd> to exit auto-pilot mode</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="p-8 mb-8 bg-white shadow-md rounded-xl">
+    <h2 class="mb-6 text-3xl font-medium">Diacritics Reference</h2>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-50">
+                <th class="p-3 text-left border border-gray-200">Key</th>
+                <th class="p-3 text-left border border-gray-200">Diacritic</th>
+                <th class="p-3 text-left border border-gray-200">Name</th>
+                <th class="p-3 text-left border border-gray-200">Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">1</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">َ</td>
+                <td class="p-3 border border-gray-200">Fatha</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بَ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">2</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ِ</td>
+                <td class="p-3 border border-gray-200">Kasra</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بِ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">3</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ُ</td>
+                <td class="p-3 border border-gray-200">Damma</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بُ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">4</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ً</td>
+                <td class="p-3 border border-gray-200">Tanween Fatha</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بً</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">5</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ٍ</td>
+                <td class="p-3 border border-gray-200">Tanween Kasra</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بٍ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">6</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ٌ</td>
+                <td class="p-3 border border-gray-200">Tanween Damma</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بٌ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">9</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ّ</td>
+                <td class="p-3 border border-gray-200">Shadda</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بّ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">0</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ْ</td>
+                <td class="p-3 border border-gray-200">Sukun</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بْ</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="p-8 bg-white shadow-md rounded-xl">
+    <h2 class="mb-6 text-3xl font-medium">Shadda Combinations</h2>
+    <p class="mb-6 text-gray-600">Hold <kbd class="px-3 py-1 mx-1 font-mono bg-gray-100 rounded">Ctrl</kbd> while pressing the diacritic key:</p>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-50">
+                <th class="p-3 text-left border border-gray-200">Combination</th>
+                <th class="p-3 text-left border border-gray-200">Result</th>
+                <th class="p-3 text-left border border-gray-200">Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">Ctrl + 1</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">َّ</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بَّ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">Ctrl + 2</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ِّ</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بِّ</td>
+            </tr>
+            <tr>
+                <td class="p-3 border border-gray-200"><kbd class="px-3 py-1 font-mono bg-gray-100 rounded">Ctrl + 3</kbd></td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">ُّ</td>
+                <td class="p-3 text-2xl border border-gray-200 font-arabic">بُّ</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

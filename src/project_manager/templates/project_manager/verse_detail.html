@@ -1,0 +1,57 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex justify-between items-center pb-4 mb-8 border-b border-gray-200">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Verse {{ verse.position }}</h1>
+            <p class="text-gray-500">
+                Project: {{ verse.document.project.name }} • 
+                Document: {{ verse.document.name }}
+            </p>
+        </div>
+        <a href="{% url 'project_manager:document_detail' verse.document.pk %}" 
+           class="inline-flex items-center px-4 py-2 border border-indigo-600 rounded-md text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Back to Document
+        </a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="p-6">
+            <div class="verse-content mb-8 text-lg" dir="rtl">
+                {{ verse.content }}
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-6 text-center">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Verse Status</h2>
+                <div class="flex flex-col items-center">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mb-3
+                        {% if verse.status == 'NEW' %}
+                            bg-gray-100 text-gray-800
+                        {% elif verse.status == 'IN_PROGRESS' %}
+                            bg-yellow-100 text-yellow-800
+                        {% elif verse.status == 'COMPLETED' %}
+                            bg-green-100 text-green-800
+                        {% else %}
+                            bg-blue-100 text-blue-800
+                        {% endif %}">
+                        {{ verse.get_status_display }}
+                    </div>
+                    <p class="text-sm text-gray-500">
+                        {% if verse.status == 'NEW' %}
+                            This verse has not been processed yet
+                        {% elif verse.status == 'IN_PROGRESS' %}
+                            This verse is currently being worked on
+                        {% elif verse.status == 'COMPLETED' %}
+                            This verse has been completed
+                        {% else %}
+                            This verse has been reviewed
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

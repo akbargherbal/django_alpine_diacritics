@@ -1,0 +1,87 @@
+{% extends 'diacriticizer/base.html' %}
+{% load static %}
+
+{% block content %}
+<main dir="rtl" class="min-h-screen bg-gray-50">
+  <!-- Main Content Area -->
+  <div
+    class="container max-w-4xl px-4 py-8 mx-auto"
+    x-data="sentHook"
+    tabindex="0"
+    :class="{'edit-mode': isEditMode, 'autopilot-mode': isAutoPilot}"
+  >
+    <!-- Text Area - Wrapped in div for HTMX target -->
+    <div id="text-content" class="p-6 mb-8 bg-white rounded-lg shadow-md font-arabic">
+      <div
+        id="verse"
+        data-tokens-count="{{ tokens_count }}"
+        data-dia-count="{{ total_diacritics }}"
+        data-mode="{{ mode }}"
+        class="space-x-2 space-x-reverse text-2xl leading-loose text-right"
+      >
+        {{ verse|safe }}
+      </div>
+
+      <!-- Hidden JSON data that will also be updated -->
+      {{ wd_dict|json_script:"wd_dict" }}
+      {{ char_dict_global|json_script:"char_dict_global" }}
+      {{ char_dict_local|json_script:"char_dict_local" }}
+    </div>
+
+    <!-- Mode and Controls -->
+    <div class="flex items-center justify-between p-4 mb-6 bg-white rounded-lg shadow-md">
+      <div class="flex items-center space-x-4 space-x-reverse">
+        <span class="text-gray-600">Current Mode:</span>
+        <span
+          class="font-semibold text-blue-600 mode-display"
+          x-text="isEditMode ? 'Edit Mode' : (isAutoPilot ? 'Auto-pilot' : 'Normal')"
+        ></span>
+      </div>
+      <div class="flex items-center space-x-4 space-x-reverse">
+        <button
+          class="px-4 py-2 font-medium text-white transition-colors bg-blue-600 rounded-md next-sentence-btn hover:bg-blue-700"
+          hx-get="{% url 'diacriticizer:next-sentence' %}?mode={{ mode }}"
+          hx-target="#text-content"
+          hx-swap="innerHTML"
+          hx-trigger="click"
+          hx-indicator=".loading-indicator"
+        >
+          Next Sentence
+        </button>
+        <span class="hidden text-gray-500 loading-indicator">Loading...</span>
+      </div>
+    </div>
+
+
+  </div>
+</main>
+{% endblock content %}
+
+<!-- Update text_content.html partial -->
+<!-- templates/diacriticizer/partials/text_content.html -->
+<div id="verse" 
+     data-tokens-count="{{ tokens_count }}"
+     data-dia-count="{{ total_diacritics }}"
+     data-mode="{{ mode }}"
+     class="space-x-2 space-x-reverse text-2xl leading-loose text-right">
+    {{ verse|safe }}
+</div>
+
+<!-- Hidden JSON data -->
+{{ wd_dict|json_script:"wd_dict" }}
+{{ char_dict_global|json_script:"char_dict_global" }}
+{{ char_dict_local|json_script:"char_dict_local" }}
+
+<!-- Styles for dynamic classes (keep these in your CSS file) -->
+<style>
+/* These classes are used by JavaScript/Alpine.js and should remain in CSS */
+.edit-mode .char {
+    cursor: pointer;
+}
+
+.autopilot-mode .char {
+    cursor: default;
+}
+
+/* Any other JavaScript-related styles */
+</style>

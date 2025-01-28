@@ -1,0 +1,66 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}تَشْكِيل - Arabic Text Diacritization{% endblock %}
+
+{% block content %}
+<section class="text-center hero mb-16">  
+    <h2 class="mb-8 text-5xl font-medium">Arabic Text Diacritization</h2>
+    <p class="max-w-2xl mx-auto text-xl text-gray-600 -mb-24">
+        Add diacritical marks (تشكيل) to Arabic text with our interactive learning platform
+    </p>
+</section>
+
+<section class="grid max-w-6xl grid-cols-1 gap-8 px-8 mx-auto mb-16 md:grid-cols-3"> 
+    <!-- Projects Card -->
+    <div class="flex flex-col items-center h-full p-8 text-center transition-transform bg-white shadow-md rounded-xl hover:-translate-y-1"> 
+        <div class="flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-blue-50">  
+            <img src="{% static 'pages/images/projects.svg' %}" alt="Projects icon" class="w-10 h-10">
+        </div>
+        <h3 class="mb-4 text-2xl font-medium">Projects</h3>
+        <p class="flex-grow mb-6 text-gray-600">  
+            Organize and manage your diacritization work efficiently
+        </p>
+        <div class="w-full">  
+            <a href="{% url 'project_manager:project_list' %}" 
+               class="inline-block w-full px-8 py-3 font-medium text-center text-white transition-colors bg-blue-500 rounded-full hover:bg-blue-600">
+                View Projects
+            </a>
+        </div>
+    </div>
+
+    <!-- Training Card -->
+    <div class="flex flex-col items-center h-full p-8 text-center transition-transform bg-white shadow-md rounded-xl hover:-translate-y-1">
+        <div class="flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-blue-50">
+            <img src="{% static 'pages/images/education.svg' %}" alt="Training mode icon" class="w-10 h-10">
+        </div>
+        <h3 class="mb-4 text-2xl font-medium">Training Mode</h3>
+        <p class="flex-grow mb-6 text-gray-600">
+            Practice adding diacritics with instant feedback
+        </p>
+        <div class="w-full">
+            <a href="{% url 'diacriticizer:training' %}" 
+               class="inline-block w-full px-8 py-3 font-medium text-center text-white transition-colors bg-blue-500 rounded-full hover:bg-blue-600">
+                Start Training
+            </a>
+        </div>
+    </div>
+
+    <!-- Diacritization Card -->
+    <div class="flex flex-col items-center h-full p-8 text-center transition-transform bg-white shadow-md rounded-xl hover:-translate-y-1">
+        <div class="flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-red-50">
+            <img src="{% static 'pages/images/edit.svg' %}" alt="Diacritization mode icon" class="w-10 h-10">
+        </div>
+        <h3 class="mb-4 text-2xl font-medium">Diacritization</h3>
+        <p class="flex-grow mb-6 text-gray-600">
+            Add diacritics to your Arabic text with keyboard shortcuts
+        </p>
+        <div class="w-full">
+            <a href="{% url 'diacriticizer:index' %}" 
+               class="inline-block w-full px-8 py-3 font-medium text-center text-white transition-colors bg-red-500 rounded-full hover:bg-red-600">
+                Start Diacritizing
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

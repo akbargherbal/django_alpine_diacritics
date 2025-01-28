@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {# Shared Font Resources #}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200..1000&family=Rubik:ital,wght@0,300..900;1,300..900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+        <style>
+      .font-arabic { font-family: "Amiri", serif; }
+    </style>
+    {% block extra_css %}{% endblock %}
+
+    <title>{% block title %}Arabic Diacritization{% endblock %}</title>
+  </head>
+  <body class="bg-gray-50">
+    {% include 'pages/partials/_navbar.html' %}
+    
+    <main class="max-w-6xl px-8 pt-12 pb-16 mx-auto">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="py-8 mt-16 text-center text-gray-600 border-t border-gray-200">
+      <p>Learn more about keyboard shortcuts in our <a href="{% url 'pages:guide' %}" class="text-blue-500 hover:text-blue-700 hover:underline">guide</a></p>
+    </footer>
+  </body>
+</html>
